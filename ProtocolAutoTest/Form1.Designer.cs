@@ -51,6 +51,7 @@
             this.cablLine = new System.Windows.Forms.TabPage();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
+            this.saveBtn = new System.Windows.Forms.Button();
             this.dateReg = new System.Windows.Forms.Label();
             this.dateTestBox = new System.Windows.Forms.TextBox();
             this.dateTest = new System.Windows.Forms.Label();
@@ -71,7 +72,7 @@
             this.costumerBox = new System.Windows.Forms.TextBox();
             this.customer = new System.Windows.Forms.Label();
             this.tabControlPanel = new System.Windows.Forms.TabControl();
-            this.saveBtn = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.mainTab.SuspendLayout();
             this.tabControlPanel.SuspendLayout();
             this.SuspendLayout();
@@ -101,7 +102,7 @@
             this.protListBox.Name = "protListBox";
             this.protListBox.Size = new System.Drawing.Size(243, 94);
             this.protListBox.TabIndex = 40;
-            this.protListBox.SelectedIndexChanged += new System.EventHandler(this.protListBox_SelectedIndexChanged);
+            this.protListBox.SelectedIndexChanged += new System.EventHandler(this.ProtListBox_SelectedIndexChanged);
             // 
             // testPersBox3
             // 
@@ -164,7 +165,7 @@
             this.creat.TabIndex = 19;
             this.creat.Text = "Создать";
             this.creat.UseVisualStyleBackColor = true;
-            this.creat.Click += new System.EventHandler(this.creat_Click);
+            this.creat.Click += new System.EventHandler(this.Create_Click);
             // 
             // auditBox
             // 
@@ -305,6 +306,16 @@
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Основные данные";
             this.mainTab.UseVisualStyleBackColor = true;
+            // 
+            // saveBtn
+            // 
+            this.saveBtn.Location = new System.Drawing.Point(868, 442);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(122, 32);
+            this.saveBtn.TabIndex = 42;
+            this.saveBtn.Text = "Место сохранения";
+            this.saveBtn.UseVisualStyleBackColor = true;
+            this.saveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // dateReg
             // 
@@ -480,15 +491,6 @@
             this.tabControlPanel.Size = new System.Drawing.Size(1033, 581);
             this.tabControlPanel.TabIndex = 1;
             // 
-            // saveBtn
-            // 
-            this.saveBtn.Location = new System.Drawing.Point(868, 442);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(122, 32);
-            this.saveBtn.TabIndex = 42;
-            this.saveBtn.Text = "Место сохранения";
-            this.saveBtn.UseVisualStyleBackColor = true;
-            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -550,6 +552,7 @@
         private System.Windows.Forms.Label customer;
         private System.Windows.Forms.TabControl tabControlPanel;
         private System.Windows.Forms.Button saveBtn;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
 

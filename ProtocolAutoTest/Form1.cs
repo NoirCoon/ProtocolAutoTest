@@ -75,7 +75,6 @@ namespace ProtocolAuto
         string pathToFile;//имя файла для открытия, в текущем варианте только Example.docx и TablExmp.docx
         private bool GeneralFault = false;//важная переменная на случай некой Генеральной ошибки, если TRUE ошибка имеет место быть
         Object missingObj = System.Reflection.Missing.Value;// какая-то хрень для функции Close(), нужно ли мне понимать что это?
-        bool[] stopAdd = new bool[6] { false, false, false, false, false, false };
         public mainForm()
         {
             InitializeComponent();//инициализация формы
@@ -278,10 +277,6 @@ namespace ProtocolAuto
             worddocument.SaveAs2(ref fileName, ref fileFormat);//сохранить как
             worddocument.Close(ref falseObj, ref missingObj, ref missingObj);//закрытие документа
             worddocument = null;//очистка переменной
-            //ПРОВЕРИТЬ НИЖЕЛЕЖАЩИЕ КОММЕНТАРИИ НА АКТУАЛЬНОСТЬ!!!
-            //wordapp = null;
-            //Вывод сообщения?
-            //label27.Text = "Завершено"; //это ваще потом сделать 
         }
         private void genFaultActive()
         {
@@ -290,17 +285,13 @@ namespace ProtocolAuto
         }
         private void protListBox_SelectedIndexChanged(object sender, EventArgs e)//если выбранный чекизменён
         {
-            if ((protListBox.GetItemChecked(0) == true) && (stopAdd[0] == false))
+            if (protListBox.GetItemChecked(0) == true)
             {
-                //tabControlPanel.TabPages.Add(cablLine);//вариант добавления
                 cablLine.Parent = tabControlPanel; //Показать
-                stopAdd[0] = true;
             }
-            else if ((protListBox.GetItemChecked(0) == false) && (stopAdd[0] == true))
+            else if (protListBox.GetItemChecked(0) == false)
             {
-                //tabControlPanel.TabPages.Remove(cablLine);//вариант скрытия
                 cablLine.Parent = null; //Скрыть
-                stopAdd[0] = false;
             }
         }
     }

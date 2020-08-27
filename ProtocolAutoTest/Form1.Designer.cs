@@ -71,6 +71,7 @@
             this.costumerBox = new System.Windows.Forms.TextBox();
             this.customer = new System.Windows.Forms.Label();
             this.tabControlPanel = new System.Windows.Forms.TabControl();
+            this.saveBtn = new System.Windows.Forms.Button();
             this.mainTab.SuspendLayout();
             this.tabControlPanel.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +88,7 @@
             // 
             // protListBox
             // 
+            this.protListBox.CheckOnClick = true;
             this.protListBox.FormattingEnabled = true;
             this.protListBox.Items.AddRange(new object[] {
             "Вторичная коммутация",
@@ -99,6 +101,7 @@
             this.protListBox.Name = "protListBox";
             this.protListBox.Size = new System.Drawing.Size(243, 94);
             this.protListBox.TabIndex = 40;
+            this.protListBox.SelectedIndexChanged += new System.EventHandler(this.protListBox_SelectedIndexChanged);
             // 
             // testPersBox3
             // 
@@ -255,6 +258,7 @@
             // 
             // mainTab
             // 
+            this.mainTab.Controls.Add(this.saveBtn);
             this.mainTab.Controls.Add(this.label8);
             this.mainTab.Controls.Add(this.protListBox);
             this.mainTab.Controls.Add(this.testPersBox3);
@@ -476,6 +480,15 @@
             this.tabControlPanel.Size = new System.Drawing.Size(1033, 581);
             this.tabControlPanel.TabIndex = 1;
             // 
+            // saveBtn
+            // 
+            this.saveBtn.Location = new System.Drawing.Point(868, 442);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(122, 32);
+            this.saveBtn.TabIndex = 42;
+            this.saveBtn.Text = "Место сохранения";
+            this.saveBtn.UseVisualStyleBackColor = true;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,6 +549,7 @@
         private System.Windows.Forms.TextBox costumerBox;
         private System.Windows.Forms.Label customer;
         private System.Windows.Forms.TabControl tabControlPanel;
+        private System.Windows.Forms.Button saveBtn;
     }
 }
 

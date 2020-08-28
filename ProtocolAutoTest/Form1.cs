@@ -65,18 +65,16 @@ namespace ProtocolAuto
 	public partial class mainForm : Form
 	{
 		private Word.Application wordapp; //глобальное определение Word.Application
-		private Word.Document worddocument;// для основного документа с шапкой и футажом
-		private Word.Document worddocument2;//для документа с набором таблиц
-		private Word.Paragraph wordparagraph;//чтобы вставить вместо @body таблицы Возможно заменить на нормальную замену, без жестко прописанного параграфа... Но как?
-		private Word.Paragraphs wordparagraphs;//чтобы вставить вместо @body таблицы
+		private Document worddocument;// для основного документа с шапкой и футажом
+		private Document worddocument2;//для документа с набором таблиц
 
 		private string SaveName;//наименование протокола для сохранения
-		private string SavePath;//адрес сохранения, реализовать нужно
+		private string SavePath;//адрес сохранения
 		private string pathToFile;//имя файла для открытия, в текущем варианте только Example.docx и TablExmp.docx
 
-		private Object trueObj = true;// какая-то хрень для функции Close(), нужно ли мне понимать что это?
-		private Object falseObj = false;// какая-то хрень для функции Close(), нужно ли мне понимать что это?
-		private Object missingObj = System.Reflection.Missing.Value;// какая-то хрень для функции Close(), нужно ли мне понимать что это?
+        private Object trueObj = true;// Обертка значения TRUE в объект
+        private Object falseObj = false;// Обертка значения FALSE в объект
+		private Object missingObj = System.Reflection.Missing.Value;// Чтото вроде NULL как объект
 
 		private bool GeneralFault = false;//важная переменная на случай некой Генеральной ошибки, если TRUE ошибка имеет место быть
 		private bool SavePathSelected; //Проверка что путь сохранения выбран, Если TRUE значит выбран.
@@ -84,6 +82,7 @@ namespace ProtocolAuto
 		public mainForm()
 		{
 			InitializeComponent();//инициализация формы
+			
 			var srcPersTest = new AutoCompleteStringCollection();//инициализация списка автозаполнения текстбокса для "Испытания провели"
 			srcPersTest.AddRange(new string[]
 			{
@@ -103,9 +102,10 @@ namespace ProtocolAuto
 			testPersBox3.AutoCompleteCustomSource = srcPersTest;
 			testPersBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			testPersBox3.AutoCompleteSource = AutoCompleteSource.CustomSource;
-			//tabControlPanel.TabPages.Remove(cablLine); //убрать
+			//tabControlPanel.TabPages.Remove(cablLine); //убрать 
+			
 			cablLine.Parent = null;
-			//
+			
 		}
 
 		private void Create_Click(object sender, EventArgs e)//нажатие кнопки Создать
@@ -152,10 +152,17 @@ namespace ProtocolAuto
 			Object findText;
 			Object replaceText;
 			Object newTemplate = false;
-			Object documentType = Word.WdNewDocumentType.wdNewBlankDocument;
+			Object documentType = WdNewDocumentType.wdNewBlankDocument;
 			Object visible = true;
 			pathToFile = "Example.docx";
-			try
+
+			Table table1; //Таблица замены обьекта и присоединения
+			Table table2; //Таблица для переопределения. Переменная для записи таблиц из второго документа и вставки в первый. Даже имя совпадает таблица 2 документ 2)
+			Table table3; //Таблица нижнего колонтитула
+			Table lastTable; //Последняя таблица с подписями
+
+
+			try//Открытие документа 1
 			{
 				Object template = Environment.CurrentDirectory + @"\Templates\" + pathToFile;//получает путь к exe + путь к файлу
 				worddocument = wordapp.Documents.Add(ref template, ref newTemplate, ref documentType, ref visible);
@@ -163,69 +170,73 @@ namespace ProtocolAuto
 			}
 			catch (Exception)
 			{
-				wordapp.Quit(ref falseObj, ref missingObj, ref missingObj);
-				worddocument = null;
-				worddocument2 = null;
-				wordapp = null;
+				MessageBox.Show("Произошла ошибка при открытии документа 1");
 				GenFaultActive();
 			}
 
-			//
-			//Замента номера протокола, температуры, давления и влаги
-			//
-			findText = "п00-0-0-0000";
-			replaceText = protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString();
-			wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
-			wordapp.Selection.Collapse(0);
-			findText = "@Temp";
-			replaceText = tempBox.Text;
-			wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
-			wordapp.Selection.Collapse(0);
-			findText = "@Pres";
-			replaceText = pressBox.Text;
-			wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
-			wordapp.Selection.Collapse(0);
-			findText = "@Vlag";
-			replaceText = wetBox.Text;
-			wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
-			wordapp.Selection.Collapse(0);
-
-			//
-			//Замена объекта и присоединения
-			//
-			Word.Table table1 = worddocument.Tables[1]; //Обращение к таблице по индексу 1
-			table1.Cell(1, 4).Range.InsertAfter(costumerBox.Text); //вставка значения поля в ячейку таблицы
-			table1.Cell(2, 4).Range.InsertAfter(objctBox.Text);
-			table1.Cell(3, 4).Range.InsertAfter(agencyBox.Text);
-			table1.Cell(4, 4).Range.InsertAfter(objAddBox.Text);
-			//
-			//замена нижнего колонтитула
-			//
-			foreach (Word.Section sec in worddocument.Sections)
+			try//Генерация основного формата
 			{
-				var range = sec.Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
-				Word.Table table3 = range.Tables[1];
-				table3.Cell(1, 1).Range.InsertAfter(protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString());
+				//
+				//Замента номера протокола, температуры, давления и влаги
+				//
+				findText = "п00-0-0-0000";
+				replaceText = protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString();
+				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
+				wordapp.Selection.Collapse(0);
+				findText = "@Temp";
+				replaceText = tempBox.Text;
+				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
+				wordapp.Selection.Collapse(0);
+				findText = "@Pres";
+				replaceText = pressBox.Text;
+				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
+				wordapp.Selection.Collapse(0);
+				findText = "@Vlag";
+				replaceText = wetBox.Text;
+				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
+				wordapp.Selection.Collapse(0);
+
+				//
+				//Замена объекта и присоединения
+				//
+				table1 = worddocument.Tables[1]; //Обращение к таблице по индексу 1
+				table1.Cell(1, 4).Range.InsertAfter(costumerBox.Text); //вставка значения поля в ячейку таблицы
+				table1.Cell(2, 4).Range.InsertAfter(objctBox.Text);
+				table1.Cell(3, 4).Range.InsertAfter(agencyBox.Text);
+				table1.Cell(4, 4).Range.InsertAfter(objAddBox.Text);
+				//
+				//замена нижнего колонтитула
+				//
+				foreach (Section sec in worddocument.Sections)
+				{
+					var range = sec.Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+					table3 = range.Tables[1];
+					table3.Cell(1, 1).Range.InsertAfter(protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString());
+				}
+
+				//
+				//Испытания произвели, фамилии даты и прочее
+				//
+
+				var countTabl = worddocument.Tables.Count;
+				lastTable = worddocument.Tables[countTabl];
+				lastTable.Cell(1, 2).Range.InsertAfter(testPersBox1.Text);
+				lastTable.Cell(2, 2).Range.InsertAfter(testPersBox2.Text);
+				lastTable.Cell(3, 2).Range.InsertAfter(testPersBox3.Text);
+				lastTable.Cell(4, 2).Range.InsertAfter(auditBox.Text);
+				lastTable.Cell(1, 3).Range.InsertAfter(fioBox1.Text);
+				lastTable.Cell(2, 3).Range.InsertAfter(fioBox2.Text);
+				lastTable.Cell(3, 3).Range.InsertAfter(fioBox3.Text);
+				lastTable.Cell(4, 3).Range.InsertAfter(fioBox4.Text);
+				lastTable.Cell(5, 2).Range.InsertAfter(dateRegBox.Text);
+				lastTable.Cell(6, 2).Range.InsertAfter(dateTestBox.Text);
+            }
+            catch (Exception) {
+				MessageBox.Show("Произошла ошибка при генерации основного формата");
+				GenFaultActive();
 			}
 
-			//
-			//Испытания произвели, фамилии даты и прочее
-			//
-
-			var countTabl = worddocument.Tables.Count;
-			Word.Table lastTable = worddocument.Tables[countTabl];
-			lastTable.Cell(1, 2).Range.InsertAfter(testPersBox1.Text);
-			lastTable.Cell(2, 2).Range.InsertAfter(testPersBox2.Text);
-			lastTable.Cell(3, 2).Range.InsertAfter(testPersBox3.Text);
-			lastTable.Cell(4, 2).Range.InsertAfter(auditBox.Text);
-			lastTable.Cell(1, 3).Range.InsertAfter(fioBox1.Text);
-			lastTable.Cell(2, 3).Range.InsertAfter(fioBox2.Text);
-			lastTable.Cell(3, 3).Range.InsertAfter(fioBox3.Text);
-			lastTable.Cell(4, 3).Range.InsertAfter(fioBox4.Text);
-			lastTable.Cell(5, 2).Range.InsertAfter(dateRegBox.Text);
-			lastTable.Cell(6, 2).Range.InsertAfter(dateTestBox.Text);
-
-			try
+			try//Открытие документа 2
 			{
 				pathToFile = "TablExmp.docx";
 				Object template = Environment.CurrentDirectory + @"\Templates\" + pathToFile;//получает путь к exe + путь к файлу, Example заменить на переменную
@@ -235,33 +246,37 @@ namespace ProtocolAuto
 			}
 			catch (Exception)
 			{
-				wordapp.Quit(ref falseObj, ref missingObj, ref missingObj);
-				worddocument = null;
-				worddocument2 = null;
-				wordapp = null;
+				MessageBox.Show("Произошла ошибка при открытии документа 2");
 				GenFaultActive();
-			}
+			} 
 
-			switch (method)
+			switch (method)//Переброс таблиц из 1 документа в 2 (Будет наверно очень нагружен вариантами, тут надо подумать как сделать) 
 			{
 				case 1:
-					table1 = worddocument2.Tables[1]; //Обращение к таблице по индексу 1 во втором документе
-					table1.Range.Copy(); //Копирование таблицы
+					table2 = worddocument2.Tables[1]; //Обращение к таблице по индексу 1 во втором документе
+					table2.Range.Copy(); //Копирование таблицы
 					worddocument.Select(); //Выбор основного документа
 					findText = "@body"; //Поиск @body
-					wordapp.Selection.Find.Execute(ref findText); //Поиск @body
+					wordapp.Selection.Find.Execute(ref findText); //Поиск @body и его выделение
+					wordapp.Selection.Collapse(WdCollapseDirection.wdCollapseStart); //убирает выделение в начало слова @body
 					wordapp.Selection.Paste(); //Вставка в выделенный фрагмент после поиска
+					wordapp.Selection.InsertParagraphAfter();//Вставка параграфа после таблицы чтобы они не слиплись при добавлении следующей
 
-					//worddocument2.Select();
-					//Word.Table table5 = worddocument2.Tables[2]; //Обращение к таблице по индексу 1
-					//table5.Range.Copy();
-					//wordparagraph.Range.Paste();
+					worddocument2.Select(); //Выбор документа 2
+					wordapp.Selection.Collapse(0); //Сброс выделения предыдущей таблицы. Нужно для устранения каких либо ошибок, скорее всего в моем мозгу. Пусть будет
+                    table2 = worddocument2.Tables[2]; //Обращение к таблице по индексу 2 во втором документе
+					table2.Range.Copy(); //Копирование таблицы
+					worddocument.Select(); //Выбор основного документа
+					findText = "@body"; //Поиск @body
+					wordapp.Selection.Find.Execute(ref findText); //Поиск @body и его выделение
+					wordapp.Selection.Paste(); //Вставка в выделенный фрагмент после поиска с выпиливание @body нахер
+
 					SaveName = "Кабельные линии";
 					break;
 				default:
 					GenFaultActive();
 					break;
-			}
+			} 
 
 			Save();
 		}
@@ -289,7 +304,7 @@ namespace ProtocolAuto
 		private void Save()//функция сохранения готового протокола
 		{
 			Object fileName = SavePath + @"\" + protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString() + " " + SaveName + ".docx";//адрес сохранения заменить курентдиректори на SavePath !ЗАМЕНЕНО
-			Object fileFormat = Word.WdSaveFormat.wdFormatDocumentDefault;//формат сохраняемого документа
+			Object fileFormat = WdSaveFormat.wdFormatDocumentDefault;//формат сохраняемого документа
 			worddocument.SaveAs2(ref fileName, ref fileFormat);//сохранить как
 			worddocument.Close(ref falseObj, ref missingObj, ref missingObj);//закрытие документа
 			worddocument = null;//очистка переменной
@@ -302,7 +317,6 @@ namespace ProtocolAuto
 			worddocument2 = null;
 			wordapp = null;
 			GeneralFault = true;
-			MessageBox.Show("Чтото пошло не так");
 		}
 
 		private void ProtListBox_SelectedIndexChanged(object sender, EventArgs e)//если выбранный чекизменён

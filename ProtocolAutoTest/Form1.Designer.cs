@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label8 = new System.Windows.Forms.Label();
             this.protListBox = new System.Windows.Forms.CheckedListBox();
             this.testPersBox3 = new System.Windows.Forms.TextBox();
@@ -49,6 +50,9 @@
             this.testPers = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.cablLine = new System.Windows.Forms.TabPage();
+            this.TableOfCableLine = new System.Windows.Forms.DataGridView();
+            this.контрольныеКабелиBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tableDBDataSet = new ProtocolAutoTest.TableDBDataSet();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
             this.saveBtn = new System.Windows.Forms.Button();
@@ -73,6 +77,16 @@
             this.customer = new System.Windows.Forms.Label();
             this.tabControlPanel = new System.Windows.Forms.TabControl();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.контрольные_кабелиTableAdapter = new ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter();
+            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.sechXjilCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cablLine.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TableOfCableLine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tableDBDataSet)).BeginInit();
             this.mainTab.SuspendLayout();
             this.tabControlPanel.SuspendLayout();
             this.SuspendLayout();
@@ -92,16 +106,16 @@
             this.protListBox.CheckOnClick = true;
             this.protListBox.FormattingEnabled = true;
             this.protListBox.Items.AddRange(new object[] {
+            "Испытание кабельных линий",
             "Вторичная коммутация",
             "Металлосвязь",
             "Электродвигатели",
             "Параметрирование ПЛК",
-            "Испытание кабельных линий",
             "Испытание контрольных кабельных линий"});
             this.protListBox.Location = new System.Drawing.Point(756, 58);
             this.protListBox.Name = "protListBox";
             this.protListBox.Size = new System.Drawing.Size(243, 94);
-            this.protListBox.TabIndex = 40;
+            this.protListBox.TabIndex = 19;
             this.protListBox.SelectedIndexChanged += new System.EventHandler(this.ProtListBox_SelectedIndexChanged);
             // 
             // testPersBox3
@@ -162,7 +176,7 @@
             this.creat.Location = new System.Drawing.Point(868, 495);
             this.creat.Name = "creat";
             this.creat.Size = new System.Drawing.Size(122, 35);
-            this.creat.TabIndex = 19;
+            this.creat.TabIndex = 20;
             this.creat.Text = "Создать";
             this.creat.UseVisualStyleBackColor = true;
             this.creat.Click += new System.EventHandler(this.Create_Click);
@@ -242,6 +256,7 @@
             // 
             // cablLine
             // 
+            this.cablLine.Controls.Add(this.TableOfCableLine);
             this.cablLine.Location = new System.Drawing.Point(4, 22);
             this.cablLine.Name = "cablLine";
             this.cablLine.Padding = new System.Windows.Forms.Padding(3);
@@ -249,6 +264,32 @@
             this.cablLine.TabIndex = 1;
             this.cablLine.Text = "Кабельные линии";
             this.cablLine.UseVisualStyleBackColor = true;
+            // 
+            // TableOfCableLine
+            // 
+            this.TableOfCableLine.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.TableOfCableLine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TableOfCableLine.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NumOfRow,
+            this.objAddCell,
+            this.MarkOfCableCell,
+            this.sechXjilCell,
+            this.lengthCell});
+            this.TableOfCableLine.Location = new System.Drawing.Point(6, 6);
+            this.TableOfCableLine.Name = "TableOfCableLine";
+            this.TableOfCableLine.Size = new System.Drawing.Size(1013, 543);
+            this.TableOfCableLine.TabIndex = 0;
+            this.TableOfCableLine.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.TableOfCableLine_UserAddedRow);
+            // 
+            // контрольныеКабелиBindingSource
+            // 
+            this.контрольныеКабелиBindingSource.DataMember = "Контрольные кабели";
+            this.контрольныеКабелиBindingSource.DataSource = this.tableDBDataSet;
+            // 
+            // tableDBDataSet
+            // 
+            this.tableDBDataSet.DataSetName = "TableDBDataSet";
+            this.tableDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // dateRegBox
             // 
@@ -312,7 +353,7 @@
             this.saveBtn.Location = new System.Drawing.Point(868, 442);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(122, 32);
-            this.saveBtn.TabIndex = 42;
+            this.saveBtn.TabIndex = 20;
             this.saveBtn.Text = "Место сохранения";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
@@ -491,6 +532,39 @@
             this.tabControlPanel.Size = new System.Drawing.Size(1033, 581);
             this.tabControlPanel.TabIndex = 1;
             // 
+            // контрольные_кабелиTableAdapter
+            // 
+            this.контрольные_кабелиTableAdapter.ClearBeforeFill = true;
+            // 
+            // NumOfRow
+            // 
+            this.NumOfRow.HeaderText = "№";
+            this.NumOfRow.Name = "NumOfRow";
+            this.NumOfRow.ReadOnly = true;
+            // 
+            // objAddCell
+            // 
+            this.objAddCell.HeaderText = "Присоединение";
+            this.objAddCell.Name = "objAddCell";
+            // 
+            // MarkOfCableCell
+            // 
+            this.MarkOfCableCell.AutoComplete = false;
+            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
+            this.MarkOfCableCell.DisplayMember = "Марка";
+            this.MarkOfCableCell.HeaderText = "Марка";
+            this.MarkOfCableCell.Name = "MarkOfCableCell";
+            // 
+            // sechXjilCell
+            // 
+            this.sechXjilCell.HeaderText = "Сечение х Число жил";
+            this.sechXjilCell.Name = "sechXjilCell";
+            // 
+            // lengthCell
+            // 
+            this.lengthCell.HeaderText = "Длина, м";
+            this.lengthCell.Name = "lengthCell";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -499,6 +573,11 @@
             this.Controls.Add(this.tabControlPanel);
             this.Name = "mainForm";
             this.Text = "ProtocolAuto";
+            this.Load += new System.EventHandler(this.mainForm_Load);
+            this.cablLine.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TableOfCableLine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tableDBDataSet)).EndInit();
             this.mainTab.ResumeLayout(false);
             this.mainTab.PerformLayout();
             this.tabControlPanel.ResumeLayout(false);
@@ -553,6 +632,15 @@
         private System.Windows.Forms.TabControl tabControlPanel;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.DataGridView TableOfCableLine;
+        private ProtocolAutoTest.TableDBDataSet tableDBDataSet;
+        private System.Windows.Forms.BindingSource контрольныеКабелиBindingSource;
+        private ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter контрольные_кабелиTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumOfRow;
+        private System.Windows.Forms.DataGridViewTextBoxColumn objAddCell;
+        private System.Windows.Forms.DataGridViewComboBoxColumn MarkOfCableCell;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sechXjilCell;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthCell;
     }
 }
 

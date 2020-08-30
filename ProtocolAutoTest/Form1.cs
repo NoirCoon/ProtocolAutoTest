@@ -60,7 +60,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
-namespace ProtocolAuto
+namespace ProtocolAutoTest
 {
 	public partial class mainForm : Form
 	{

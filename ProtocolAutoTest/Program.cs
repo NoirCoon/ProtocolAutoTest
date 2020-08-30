@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProtocolAuto
+namespace ProtocolAutoTest
 {
     static class Program
     {

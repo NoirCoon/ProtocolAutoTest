@@ -61,7 +61,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
-namespace ProtocolAuto
+namespace ProtocolAutoTest
 {
 	public partial class mainForm : Form
 	{
@@ -79,24 +79,7 @@ namespace ProtocolAuto
 
 		private bool GeneralFault = false;//важная переменная на случай некой Генеральной ошибки, если TRUE ошибка имеет место быть
 		private bool SavePathSelected; //Проверка что путь сохранения выбран, Если TRUE значит выбран.
-
-		class TemplatesTable//класс для хранения данных шаблонов
-        {
-			public Table[] tables = new Table[10];//массив таблиц макс 10
-			public int[] index;//массив для индексов используемых таблиц
-			public int GetCountTable()//получение количества таблицы
-            {
-				int count=0;
-				foreach(Table table in tables)
-                {
-					if(table != null)
-                    {
-						count++;
-                    }
-                }
-				return count;
-            }
-        }
+        
 		public mainForm()
 		{
 			InitializeComponent();//инициализация формы
@@ -168,7 +151,7 @@ namespace ProtocolAuto
 			//Список шаблонов
 			//
 
-			TemplatesTable cbLine = new TemplatesTable();//Шаблон кабельные линии
+			TemplateTables cbLine = new TemplateTables();//Шаблон кабельные линии
 			cbLine.index = new int[2] { 1, 2 };//таблица 1,2
 			
 			//Объявление всякой хрени
@@ -274,7 +257,7 @@ namespace ProtocolAuto
 			{
 				case 1:
 					worddocument2.Select();
-					for(int i = 0; i<=cbLine.index.Length-1; i++)//цикл записи в шаблон соответствующих таблиц согласно данным в массиве index
+					for (int i = 0; i <= cbLine.index.Length - 1; i++)//цикл записи в шаблон соответствующих таблиц согласно данным в массиве index
 					{
 						cbLine.tables[i] = worddocument2.Tables[cbLine.index[i]];
 					}

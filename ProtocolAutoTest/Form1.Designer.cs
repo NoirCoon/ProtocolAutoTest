@@ -1,4 +1,4 @@
-﻿namespace ProtocolAuto
+﻿namespace ProtocolAutoTest
 {
     partial class mainForm
     {

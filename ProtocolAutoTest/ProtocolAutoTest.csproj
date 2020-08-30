@@ -59,6 +59,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TableDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TemplateTables.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

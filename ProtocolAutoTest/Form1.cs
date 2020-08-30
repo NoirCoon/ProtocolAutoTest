@@ -79,20 +79,16 @@ namespace ProtocolAutoTest
 		private bool GeneralFault = false;//важная переменная на случай некой Генеральной ошибки, если TRUE ошибка имеет место быть
 		private bool SavePathSelected; //Проверка что путь сохранения выбран, Если TRUE значит выбран.
 
-		public class TemplatesTable//класс для хранения данных шаблонов
-		{
-			public Table[] tables;//массив таблиц
-			public int[] index;//массив для индексов используемых таблиц
-		}
 		//
 		//Список шаблонов
 		//
-		private TemplatesTable tmpBufferTemplates;//пустой шаблон
-		private readonly TemplatesTable cbLineTemplate = new TemplatesTable
+		private TemplateTables tmpBufferTemplates;//пустой шаблон
+		private readonly TemplateTables cbLineTemplate = new TemplateTables
 		{
 			tables = new Table[2],
 			index = new int[2] { 1, 2 }//таблица 1,2
 		};
+
 		public mainForm()
 		{
 			InitializeComponent();//инициализация формы

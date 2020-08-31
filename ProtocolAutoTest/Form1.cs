@@ -71,6 +71,7 @@ namespace ProtocolAutoTest
 		private string SaveName;//наименование протокола для сохранения
 		private string SavePath;//адрес сохранения
 		private string pathToFile;//имя файла для открытия, в текущем варианте только Example.docx и TablExmp.docx
+		private int numOfProtocol;
 
 		private Object trueObj = true;// Обертка значения TRUE в объект
 		private Object falseObj = false;// Обертка значения FALSE в объект
@@ -124,9 +125,12 @@ namespace ProtocolAutoTest
 
 		private void Create_Click(object sender, EventArgs e)//нажатие кнопки Создать
 		{
+			
 			if (EmptyTest() == true && SavePathSelected == true)//проверка на заполненость полей и выбор пути сохранения
 			{
-                wordapp = new Word.Application {Visible = true};
+				create.Enabled = false;
+				numOfProtocol = 1;
+				wordapp = new Word.Application {Visible = true};
 				for(int i = 0; i < protListBox.Items.Count; i++)
                 {
 					if(protListBox.GetItemChecked(i) == true)
@@ -134,9 +138,15 @@ namespace ProtocolAutoTest
 						CreateTemplate();
 						ChangeTemplate(i+1);
                     }
+
+					numOfProtocol++;
 				}
+				create.Enabled = true;
 			}
-			else { GenFault(20); } //Иначе сообщение об ошибке
+			else //Иначе сообщение об ошибке
+			{ 
+				GenFault(20); 
+			} 
 		}
 		//
 		//Функция определяющая заполненность полей (На данном этапе проверяет только главную вкладку)
@@ -230,7 +240,7 @@ namespace ProtocolAutoTest
 								 //
 				worddocument.Select();
 				findText = "п00-0-0-0000";
-				replaceText = protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString();
+				replaceText = protNumBox.Text + "-" + numOfProtocol.ToString() + "-" + DateTime.Now.Year.ToString();
 				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText);
 				wordapp.Selection.Collapse(0);
 				findText = "@Temp";
@@ -261,7 +271,7 @@ namespace ProtocolAutoTest
 				{
 					var range = sec.Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
 					table3 = range.Tables[1];
-					table3.Cell(1, 1).Range.InsertAfter(protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString());
+					table3.Cell(1, 1).Range.InsertAfter(protNumBox.Text + "-" + numOfProtocol.ToString() + "-" + DateTime.Now.Year.ToString());
 				}
 
 				//
@@ -353,7 +363,7 @@ namespace ProtocolAutoTest
 				findText = "@body"; //Поиск @body
 				replaceText = "";
 				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText); //Поиск @body и его замена
-				//Save();
+				Save();
 			}
 			catch (Exception)
 			{
@@ -373,80 +383,58 @@ namespace ProtocolAutoTest
             {
 				switch (method)
 				{
+					//
+					// Придумать как оптимизировать, частично оптимизировал, читабельность... ну, кто-то сможет прочитать, а кто-то ты
+					//
 					case 1://случай для шаблона кабельные линии таблица
-						for (int i = 0; i < cablLineGrid.Rows.Count; i++)
+						for (int i = 0; i < cablLineGrid.Rows.Count; i++)//перебирает строчки гридвью
 						{
-							if(cablLineGrid.Rows[i].Cells[1].Value != null)
+							if(cablLineGrid.Rows[i].Cells[1].Value != null)//условие, если ячейка с номером строки не пустая
 							{
-								for (int j = 0; j < cablLineGrid.Columns.Count; j++)
+								for (int j = 0; j < 3; j++)//перебирает столбцы грид вью 1 и 2
 								{
-									if (j == 3)
-									{
-										tables[1].Cell(i + 1, 3).Range.InsertAfter(" " + cablLineGrid.Rows[i].Cells[j].Value.ToString());
-									}
-									else if (j == 4)
-									{
-										tables[1].Cell(i + 1, 3).Range.InsertAfter("X" + cablLineGrid.Rows[i].Cells[j].Value.ToString());
-									}
-									else if (j == 5)
-									{
-										tables[1].Cell(i + 1, 4).Range.InsertAfter(cablLineGrid.Rows[i].Cells[j].Value.ToString());
-									}
-									else
-									{
-										tables[1].Cell(i + 1, j + 1).Range.InsertAfter(cablLineGrid.Rows[i].Cells[j].Value.ToString());
-									}
+									tables[1].Cell(i + 1, j + 1).Range.InsertAfter(cablLineGrid.Rows[i].Cells[j].Value.ToString());//Вставляются все остальные, точнее первая и вторая ячейка на соответствующие места
 								}
-								if (i < (cablLineGrid.Rows.Count - 2))
-									tables[1].Rows.Add();
-								tables[1].Cell(i + 1, 5).Range.InsertAfter("Соответствует");
-								for (int j = 6; j < 14; j++)
+								tables[1].Cell(i + 1, 3).Range.InsertAfter(" " + cablLineGrid.Rows[i].Cells[3].Value.ToString());
+								tables[1].Cell(i + 1, 3).Range.InsertAfter("X" + cablLineGrid.Rows[i].Cells[4].Value.ToString());//присоединяется к ячейке с маркой и кол-вом жил
+								tables[1].Cell(i + 1, 4).Range.InsertAfter(cablLineGrid.Rows[i].Cells[5].Value.ToString());//вставляется в соответствующую ячейку, нужно, потому что есть смещение на две ячейки от шаблонной таблицы
+								//
+								//Авто заполнение второй части таблицы с указанием сопротивления жил кабеля
+								tables[1].Cell(i + 1, 5).Range.InsertAfter("Соответствует");//думаю всё понятно
+								for (int j = 6; j < 14; j++)//перебирает столбцы ячеек сопротивления жил кабеля с 6 по 13
 								{
-									if((j-5) <= Convert.ToInt32(cablLineGrid.Rows[i].Cells[4].Value.ToString()))
+									if((j-5) <= Convert.ToInt32(cablLineGrid.Rows[i].Cells[3].Value.ToString()))//берёт значения в ячейки кол-во жил, переводит в строку, переводит в число. Адрес ячейки переводится в номер жилы (j-5). Сравниваются
                                     {
-										tables[1].Cell(i + 1, j).Range.InsertAfter((rnd.Next(19, 31)*100).ToString());
+										tables[1].Cell(i + 1, j).Range.InsertAfter((rnd.Next(19, 31)*100).ToString());//записывает случайное значение сопротивления
 									}
 									else
 									{
-										tables[1].Cell(i + 1, j).Range.InsertAfter("—");
+										tables[1].Cell(i + 1, j).Range.InsertAfter("—");//записывает прочерк, если кол-во жил меньше номера жилы в таблице
 									}
 								}
+								if (i < (cablLineGrid.Rows.Count - 2))//проверка, есть ли дальше ещё строки или нет
+									tables[1].Rows.Add();//вставляет новую строку если есть
 							}
 						}
 						break;
+					//
+					// Придумать как оптимизировать
+					//
 					case 2:
-						for(int i = 0; i < engineGrid.Rows.Count; i++)
+						for(int i = 0; i < engineGrid.Rows.Count; i++)//Ну тут понятно
                         {
-							if (engineGrid.Rows[i].Cells[1].Value != null)
+							if (engineGrid.Rows[i].Cells[1].Value != null)//уже было в кабллайн
 							{
-								for (int j = 0; j < engineGrid.Columns.Count; j++)
+								for (int j = 0; j < 3; j++)//уже было в кабллайн
 								{
-									tables[1].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());
-									if (j < 2)
-									{
-										tables[3].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());
-									}
-									if(j == 2)
-                                    {
-										tables[3].Cell(i + 1, j + 1).Range.InsertAfter((rnd.Next(19, 31) * 100).ToString());
-									}
-									if (j == 3)
-									{
-										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("1,0");
-									}
-									if (j == 4)
-									{
-										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("> 1,3");
-									}
-									if (j == 5)
-									{
-										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("выдержал");
-									}
-									if (j == 6)
-									{
-										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("Соответствует");
-									}
+									tables[1].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());//переносит все данные в первую таблицу
+									tables[3].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());
 								}
+										tables[3].Cell(i + 1, 3).Range.InsertAfter((rnd.Next(19, 31) * 100).ToString());
+										tables[3].Cell(i + 1, 4).Range.InsertAfter("1,0");
+										tables[3].Cell(i + 1, 5).Range.InsertAfter("> 1,3");
+										tables[3].Cell(i + 1, 6).Range.InsertAfter("выдержал");
+										tables[3].Cell(i + 1, 7).Range.InsertAfter("Соответствует");
 								if (i < (engineGrid.Rows.Count - 2))
 								{
 									tables[1].Rows.Add();
@@ -471,7 +459,7 @@ namespace ProtocolAutoTest
 
 		private void Save()//wordapp всё еще открыт
 		{
-			Object fileName = SavePath + @"\" + protNumBox.Text + "-" + "ЗАМЕНИТЬ" + "-" + DateTime.Now.Year.ToString() + " " + SaveName + ".docx";//заменить "ЗАМЕНИТЬ" на порядковый номер протокола (формируется из чекбокса)
+			Object fileName = SavePath + @"\" + protNumBox.Text + "-" + numOfProtocol.ToString() + "-" + DateTime.Now.Year.ToString() + " " + SaveName + ".docx";//заменить "ЗАМЕНИТЬ" на порядковый номер протокола (формируется из чекбокса)
 			Object fileFormat = WdSaveFormat.wdFormatDocumentDefault;//формат сохраняемого документа
 			worddocument2.Content.Font.Size = 11;//устанавливает размер шрфита всего документа
 			worddocument.SaveAs2(ref fileName, ref fileFormat);//сохранить как

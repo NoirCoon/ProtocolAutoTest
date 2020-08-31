@@ -38,7 +38,7 @@
             this.protNumBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.fioBox4 = new System.Windows.Forms.TextBox();
-            this.creat = new System.Windows.Forms.Button();
+            this.create = new System.Windows.Forms.Button();
             this.auditBox = new System.Windows.Forms.TextBox();
             this.audit = new System.Windows.Forms.Label();
             this.fioBox3 = new System.Windows.Forms.TextBox();
@@ -51,14 +51,8 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.cablLinePage = new System.Windows.Forms.TabPage();
             this.cablLineGrid = new System.Windows.Forms.DataGridView();
-            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.контрольныеКабелиBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableDBDataSet = new ProtocolAutoTest.TableDBDataSet();
-            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
             this.saveBtn = new System.Windows.Forms.Button();
@@ -101,6 +95,12 @@
             this.currentOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.контрольные_кабелиTableAdapter = new ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter();
+            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cablLinePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cablLineGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).BeginInit();
@@ -188,15 +188,15 @@
             this.fioBox4.Size = new System.Drawing.Size(168, 20);
             this.fioBox4.TabIndex = 16;
             // 
-            // creat
+            // create
             // 
-            this.creat.Location = new System.Drawing.Point(868, 495);
-            this.creat.Name = "creat";
-            this.creat.Size = new System.Drawing.Size(122, 35);
-            this.creat.TabIndex = 20;
-            this.creat.Text = "Создать";
-            this.creat.UseVisualStyleBackColor = true;
-            this.creat.Click += new System.EventHandler(this.Create_Click);
+            this.create.Location = new System.Drawing.Point(868, 495);
+            this.create.Name = "create";
+            this.create.Size = new System.Drawing.Size(122, 35);
+            this.create.TabIndex = 20;
+            this.create.Text = "Создать";
+            this.create.UseVisualStyleBackColor = true;
+            this.create.Click += new System.EventHandler(this.Create_Click);
             // 
             // auditBox
             // 
@@ -291,33 +291,14 @@
             this.NumOfRow,
             this.objAddCell,
             this.MarkOfCableCell,
-            this.sechenieCable,
             this.countJil,
+            this.sechenieCable,
             this.lengthCell});
             this.cablLineGrid.Location = new System.Drawing.Point(6, 6);
             this.cablLineGrid.Name = "cablLineGrid";
             this.cablLineGrid.Size = new System.Drawing.Size(1013, 543);
             this.cablLineGrid.TabIndex = 0;
             this.cablLineGrid.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.cablLineGrid_UserAddedRow);
-            // 
-            // NumOfRow
-            // 
-            this.NumOfRow.HeaderText = "№";
-            this.NumOfRow.Name = "NumOfRow";
-            this.NumOfRow.ReadOnly = true;
-            // 
-            // objAddCell
-            // 
-            this.objAddCell.HeaderText = "Присоединение";
-            this.objAddCell.Name = "objAddCell";
-            // 
-            // MarkOfCableCell
-            // 
-            this.MarkOfCableCell.AutoComplete = false;
-            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
-            this.MarkOfCableCell.DisplayMember = "Марка";
-            this.MarkOfCableCell.HeaderText = "Марка";
-            this.MarkOfCableCell.Name = "MarkOfCableCell";
             // 
             // контрольныеКабелиBindingSource
             // 
@@ -328,21 +309,6 @@
             // 
             this.tableDBDataSet.DataSetName = "TableDBDataSet";
             this.tableDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // sechenieCable
-            // 
-            this.sechenieCable.HeaderText = "Сечение";
-            this.sechenieCable.Name = "sechenieCable";
-            // 
-            // countJil
-            // 
-            this.countJil.HeaderText = "Кол-во жил";
-            this.countJil.Name = "countJil";
-            // 
-            // lengthCell
-            // 
-            this.lengthCell.HeaderText = "Длина, м";
-            this.lengthCell.Name = "lengthCell";
             // 
             // dateRegBox
             // 
@@ -363,7 +329,7 @@
             this.mainTab.Controls.Add(this.protNumBox);
             this.mainTab.Controls.Add(this.label6);
             this.mainTab.Controls.Add(this.fioBox4);
-            this.mainTab.Controls.Add(this.creat);
+            this.mainTab.Controls.Add(this.create);
             this.mainTab.Controls.Add(this.auditBox);
             this.mainTab.Controls.Add(this.audit);
             this.mainTab.Controls.Add(this.fioBox3);
@@ -721,6 +687,40 @@
             // 
             this.контрольные_кабелиTableAdapter.ClearBeforeFill = true;
             // 
+            // NumOfRow
+            // 
+            this.NumOfRow.HeaderText = "№";
+            this.NumOfRow.Name = "NumOfRow";
+            this.NumOfRow.ReadOnly = true;
+            // 
+            // objAddCell
+            // 
+            this.objAddCell.HeaderText = "Присоединение";
+            this.objAddCell.Name = "objAddCell";
+            // 
+            // MarkOfCableCell
+            // 
+            this.MarkOfCableCell.AutoComplete = false;
+            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
+            this.MarkOfCableCell.DisplayMember = "Марка";
+            this.MarkOfCableCell.HeaderText = "Марка";
+            this.MarkOfCableCell.Name = "MarkOfCableCell";
+            // 
+            // countJil
+            // 
+            this.countJil.HeaderText = "Кол-во жил";
+            this.countJil.Name = "countJil";
+            // 
+            // sechenieCable
+            // 
+            this.sechenieCable.HeaderText = "Сечение";
+            this.sechenieCable.Name = "sechenieCable";
+            // 
+            // lengthCell
+            // 
+            this.lengthCell.HeaderText = "Длина, м";
+            this.lengthCell.Name = "lengthCell";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -756,7 +756,7 @@
         private System.Windows.Forms.TextBox protNumBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox fioBox4;
-        private System.Windows.Forms.Button creat;
+        private System.Windows.Forms.Button create;
         private System.Windows.Forms.TextBox auditBox;
         private System.Windows.Forms.Label audit;
         private System.Windows.Forms.TextBox fioBox3;
@@ -796,12 +796,6 @@
         private ProtocolAutoTest.TableDBDataSet tableDBDataSet;
         private System.Windows.Forms.BindingSource контрольныеКабелиBindingSource;
         private ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter контрольные_кабелиTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumOfRow;
-        private System.Windows.Forms.DataGridViewTextBoxColumn objAddCell;
-        private System.Windows.Forms.DataGridViewComboBoxColumn MarkOfCableCell;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sechenieCable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn countJil;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lengthCell;
         private System.Windows.Forms.TabPage enginePage;
         private System.Windows.Forms.DataGridView engineGrid;
         private System.Windows.Forms.Label label9;
@@ -819,6 +813,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn powerOfEngine;
         private System.Windows.Forms.DataGridViewTextBoxColumn voltageOfEngine;
         private System.Windows.Forms.DataGridViewTextBoxColumn currentOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumOfRow;
+        private System.Windows.Forms.DataGridViewTextBoxColumn objAddCell;
+        private System.Windows.Forms.DataGridViewComboBoxColumn MarkOfCableCell;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countJil;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sechenieCable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthCell;
     }
 }
 

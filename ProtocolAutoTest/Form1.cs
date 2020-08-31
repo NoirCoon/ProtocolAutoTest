@@ -85,8 +85,8 @@ namespace ProtocolAutoTest
 		private TemplateTables tmpBufferTemplates;//пустой шаблон
 		private readonly TemplateTables cbLineTemplate = new TemplateTables
 		{
-			tables = new Table[2],
-			index = new int[2] { 1, 2 }//таблица 1,2
+			tables = new Table[4],
+			index = new int[4] { 1, 2, 3, 4 }//таблица 1,2
 		};
 
 		public mainForm()
@@ -336,13 +336,13 @@ namespace ProtocolAutoTest
 					wordapp.Selection.Find.Execute(ref findText); //Поиск @body и его выделение
 					wordapp.Selection.Collapse(WdCollapseDirection.wdCollapseStart); //убирает выделение в начало слова @body
 					wordapp.Selection.Paste(); //Вставка в выделенный фрагмент после поиска
-					wordapp.Selection.InsertParagraphAfter();//Вставка параграфа после таблицы чтобы они не слиплись при добавлении следующей
+					//wordapp.Selection.InsertParagraphAfter();//Вставка параграфа после таблицы чтобы они не слиплись при добавлении следующей
 				}
 				worddocument.Select(); //Выбор основного документа
 				findText = "@body"; //Поиск @body
 				replaceText = "";
 				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText); //Поиск @body и его замена
-				Save();
+				//Save();
 			}
 			catch (Exception)
 			{
@@ -356,18 +356,48 @@ namespace ProtocolAutoTest
 
 		private Table[] ChangeTable(Table[] tables, int method)//Работает частично, пока не найден способ добавить новую строку, вставка работает норм
 		{
-            try
+			Random rnd = new Random();
+			//rnd.Next(19, 31);
+			try
             {
 				switch (method)
 				{
 					case 1://случай для шаблона кабельные линии таблица
 						for (int i = 0; i < TableOfCableLine.Rows.Count; i++)
 						{
-							for (int j = 0; j < TableOfCableLine.Columns.Count; j++)
+							if(TableOfCableLine.Rows[i].Cells[1].Value != null)
 							{
-								if (TableOfCableLine.Rows[i].Cells[j].Value != null)
+								tables[1].Rows.Add();
+								for (int j = 0; j < TableOfCableLine.Columns.Count; j++)
 								{
-									tables[0].Cell(i + 4, j + 1).Range.InsertAfter(TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+									if (j == 3)
+									{
+										tables[1].Cell(i + 1, 3).Range.InsertAfter(" " + TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+									}
+									else if (j == 4)
+									{
+										tables[1].Cell(i + 1, 3).Range.InsertAfter("X" + TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+									}
+									else if (j == 5)
+									{
+										tables[1].Cell(i + 1, 4).Range.InsertAfter(TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+									}
+									else
+									{
+										tables[1].Cell(i + 1, j + 1).Range.InsertAfter(TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+									}
+								}
+								tables[1].Cell(i + 1, 5).Range.InsertAfter("Соответствует");
+								for (int j = 6; j < 14; j++)
+								{
+									if((j-5) <= Convert.ToInt32(TableOfCableLine.Rows[i].Cells[4].Value.ToString()))
+                                    {
+										tables[1].Cell(i + 1, j).Range.InsertAfter((rnd.Next(19, 31)*100).ToString());
+									}
+									else
+									{
+										tables[1].Cell(i + 1, j).Range.InsertAfter("—");
+									}
 								}
 							}
 						}
@@ -396,6 +426,7 @@ namespace ProtocolAutoTest
 			worddocument = null;//очистка переменной
 			worddocument2.Close(ref falseObj, ref missingObj, ref missingObj);//закрытие документа2
 			worddocument2 = null;//очистка переменной2
+			wordapp = null;
 		}
 
 		//
@@ -507,5 +538,5 @@ namespace ProtocolAutoTest
 				TableOfCableLine.Rows[i].Cells[0].Value = i + 1;
 			}
 		}
-	}
+    }
 }

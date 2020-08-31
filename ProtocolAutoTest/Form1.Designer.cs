@@ -51,13 +51,8 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.cablLinePage = new System.Windows.Forms.TabPage();
             this.TableOfCableLine = new System.Windows.Forms.DataGridView();
-            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.контрольныеКабелиBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableDBDataSet = new ProtocolAutoTest.TableDBDataSet();
-            this.sechXjilCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
             this.saveBtn = new System.Windows.Forms.Button();
@@ -83,6 +78,12 @@
             this.tabControlPanel = new System.Windows.Forms.TabControl();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.контрольные_кабелиTableAdapter = new ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter();
+            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cablLinePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TableOfCableLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).BeginInit();
@@ -268,32 +269,14 @@
             this.NumOfRow,
             this.objAddCell,
             this.MarkOfCableCell,
-            this.sechXjilCell,
+            this.sechenieCable,
+            this.countJil,
             this.lengthCell});
             this.TableOfCableLine.Location = new System.Drawing.Point(6, 6);
             this.TableOfCableLine.Name = "TableOfCableLine";
             this.TableOfCableLine.Size = new System.Drawing.Size(1013, 543);
             this.TableOfCableLine.TabIndex = 0;
             this.TableOfCableLine.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.TableOfCableLine_UserAddedRow);
-            // 
-            // NumOfRow
-            // 
-            this.NumOfRow.HeaderText = "№";
-            this.NumOfRow.Name = "NumOfRow";
-            this.NumOfRow.ReadOnly = true;
-            // 
-            // objAddCell
-            // 
-            this.objAddCell.HeaderText = "Присоединение";
-            this.objAddCell.Name = "objAddCell";
-            // 
-            // MarkOfCableCell
-            // 
-            this.MarkOfCableCell.AutoComplete = false;
-            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
-            this.MarkOfCableCell.DisplayMember = "Марка";
-            this.MarkOfCableCell.HeaderText = "Марка";
-            this.MarkOfCableCell.Name = "MarkOfCableCell";
             // 
             // контрольныеКабелиBindingSource
             // 
@@ -304,16 +287,6 @@
             // 
             this.tableDBDataSet.DataSetName = "TableDBDataSet";
             this.tableDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // sechXjilCell
-            // 
-            this.sechXjilCell.HeaderText = "Сечение х Число жил";
-            this.sechXjilCell.Name = "sechXjilCell";
-            // 
-            // lengthCell
-            // 
-            this.lengthCell.HeaderText = "Длина, м";
-            this.lengthCell.Name = "lengthCell";
             // 
             // dateRegBox
             // 
@@ -560,6 +533,40 @@
             // 
             this.контрольные_кабелиTableAdapter.ClearBeforeFill = true;
             // 
+            // NumOfRow
+            // 
+            this.NumOfRow.HeaderText = "№";
+            this.NumOfRow.Name = "NumOfRow";
+            this.NumOfRow.ReadOnly = true;
+            // 
+            // objAddCell
+            // 
+            this.objAddCell.HeaderText = "Присоединение";
+            this.objAddCell.Name = "objAddCell";
+            // 
+            // MarkOfCableCell
+            // 
+            this.MarkOfCableCell.AutoComplete = false;
+            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
+            this.MarkOfCableCell.DisplayMember = "Марка";
+            this.MarkOfCableCell.HeaderText = "Марка";
+            this.MarkOfCableCell.Name = "MarkOfCableCell";
+            // 
+            // sechenieCable
+            // 
+            this.sechenieCable.HeaderText = "Сечение";
+            this.sechenieCable.Name = "sechenieCable";
+            // 
+            // countJil
+            // 
+            this.countJil.HeaderText = "Кол-во жил";
+            this.countJil.Name = "countJil";
+            // 
+            // lengthCell
+            // 
+            this.lengthCell.HeaderText = "Длина, м";
+            this.lengthCell.Name = "lengthCell";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -634,7 +641,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NumOfRow;
         private System.Windows.Forms.DataGridViewTextBoxColumn objAddCell;
         private System.Windows.Forms.DataGridViewComboBoxColumn MarkOfCableCell;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sechXjilCell;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sechenieCable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn countJil;
         private System.Windows.Forms.DataGridViewTextBoxColumn lengthCell;
     }
 }

@@ -86,7 +86,12 @@ namespace ProtocolAutoTest
 		private readonly TemplateTables cbLineTemplate = new TemplateTables
 		{
 			tables = new Table[4],
-			index = new int[4] { 1, 2, 3, 4 }//таблица 1,2
+			index = new int[4] { 1, 2, 3, 4 }
+		};
+		private readonly TemplateTables engineTemplate = new TemplateTables
+		{
+			tables = new Table[6],
+			index = new int[6] { 5, 6, 7, 8, 9, 10 }
 		};
 
 		public mainForm()
@@ -113,7 +118,8 @@ namespace ProtocolAutoTest
 			testPersBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			testPersBox3.AutoCompleteSource = AutoCompleteSource.CustomSource;
 			
-			cablLinePage.Parent = null;
+			//cablLinePage.Parent = null;
+			//enginePage.Parent = null;
 		}
 
 		private void Create_Click(object sender, EventArgs e)//нажатие кнопки Создать
@@ -304,6 +310,11 @@ namespace ProtocolAutoTest
 						replaceText = "контрольных кабельных линий.";
 						tmpBufferTemplates = cbLineTemplate;//скопирован шаблон cbLine
 						break;
+					case 2:
+						SaveName = "Электродвигатели";
+						replaceText = "электродвигателей переменного тока.";
+						tmpBufferTemplates = engineTemplate;
+						break;
 					default:
 						replaceText = "Ошибочка! GenFault(3)";
 						GenFault(3);
@@ -363,34 +374,35 @@ namespace ProtocolAutoTest
 				switch (method)
 				{
 					case 1://случай для шаблона кабельные линии таблица
-						for (int i = 0; i < TableOfCableLine.Rows.Count; i++)
+						for (int i = 0; i < cablLineGrid.Rows.Count; i++)
 						{
-							if(TableOfCableLine.Rows[i].Cells[1].Value != null)
+							if(cablLineGrid.Rows[i].Cells[1].Value != null)
 							{
-								tables[1].Rows.Add();
-								for (int j = 0; j < TableOfCableLine.Columns.Count; j++)
+								for (int j = 0; j < cablLineGrid.Columns.Count; j++)
 								{
 									if (j == 3)
 									{
-										tables[1].Cell(i + 1, 3).Range.InsertAfter(" " + TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+										tables[1].Cell(i + 1, 3).Range.InsertAfter(" " + cablLineGrid.Rows[i].Cells[j].Value.ToString());
 									}
 									else if (j == 4)
 									{
-										tables[1].Cell(i + 1, 3).Range.InsertAfter("X" + TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+										tables[1].Cell(i + 1, 3).Range.InsertAfter("X" + cablLineGrid.Rows[i].Cells[j].Value.ToString());
 									}
 									else if (j == 5)
 									{
-										tables[1].Cell(i + 1, 4).Range.InsertAfter(TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+										tables[1].Cell(i + 1, 4).Range.InsertAfter(cablLineGrid.Rows[i].Cells[j].Value.ToString());
 									}
 									else
 									{
-										tables[1].Cell(i + 1, j + 1).Range.InsertAfter(TableOfCableLine.Rows[i].Cells[j].Value.ToString());
+										tables[1].Cell(i + 1, j + 1).Range.InsertAfter(cablLineGrid.Rows[i].Cells[j].Value.ToString());
 									}
 								}
+								if (i < (cablLineGrid.Rows.Count - 2))
+									tables[1].Rows.Add();
 								tables[1].Cell(i + 1, 5).Range.InsertAfter("Соответствует");
 								for (int j = 6; j < 14; j++)
 								{
-									if((j-5) <= Convert.ToInt32(TableOfCableLine.Rows[i].Cells[4].Value.ToString()))
+									if((j-5) <= Convert.ToInt32(cablLineGrid.Rows[i].Cells[4].Value.ToString()))
                                     {
 										tables[1].Cell(i + 1, j).Range.InsertAfter((rnd.Next(19, 31)*100).ToString());
 									}
@@ -401,6 +413,47 @@ namespace ProtocolAutoTest
 								}
 							}
 						}
+						break;
+					case 2:
+						for(int i = 0; i < engineGrid.Rows.Count; i++)
+                        {
+							if (engineGrid.Rows[i].Cells[1].Value != null)
+							{
+								for (int j = 0; j < engineGrid.Columns.Count; j++)
+								{
+									tables[1].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());
+									if (j < 2)
+									{
+										tables[3].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());
+									}
+									if(j == 2)
+                                    {
+										tables[3].Cell(i + 1, j + 1).Range.InsertAfter((rnd.Next(19, 31) * 100).ToString());
+									}
+									if (j == 3)
+									{
+										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("1,0");
+									}
+									if (j == 4)
+									{
+										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("> 1,3");
+									}
+									if (j == 5)
+									{
+										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("выдержал");
+									}
+									if (j == 6)
+									{
+										tables[3].Cell(i + 1, j + 1).Range.InsertAfter("Соответствует");
+									}
+								}
+								if (i < (engineGrid.Rows.Count - 2))
+								{
+									tables[1].Rows.Add();
+									tables[3].Rows.Add();
+								}
+							}
+                        }
 						break;
 				}
 			}
@@ -502,9 +555,9 @@ namespace ProtocolAutoTest
 		//
 		//Функция для отображения вкладок, если чекбокс изменяется
 		//
-
 		private void ProtListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			/*
 			for (int i = 0; i < protListBox.Items.Count; i++)
 			{
 				if (protListBox.GetItemChecked(i) == true)
@@ -516,6 +569,7 @@ namespace ProtocolAutoTest
 					cablLinePage.Parent = null; //Скрыть
 				}
 			}
+			*/
 		}
 		//
 		//Функция которая нужна для подключения к бд
@@ -531,11 +585,19 @@ namespace ProtocolAutoTest
 		//Функция нумерация строк при создании новой строки, строки только для чтения, по ним определяется можно ли строку перенисти в таблицу или нет
 		//
 
-		private void TableOfCableLine_UserAddedRow(object sender, DataGridViewRowEventArgs e)//при создании новой строчки
+		private void cablLineGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)//при создании новой строчки
 		{
-			for (int i = 0; i < TableOfCableLine.Rows.Count-1; i++)//перебирает все строчки
+			for (int i = 0; i < cablLineGrid.Rows.Count - 1; i++)//перебирает все строчки
 			{
-				TableOfCableLine.Rows[i].Cells[0].Value = i + 1;
+				cablLineGrid.Rows[i].Cells[0].Value = i + 1;
+			}
+		}
+
+        private void engineGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+			for (int i = 0; i < engineGrid.Rows.Count - 1; i++)//перебирает все строчки
+			{
+				engineGrid.Rows[i].Cells[0].Value = i + 1;
 			}
 		}
     }

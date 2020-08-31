@@ -50,9 +50,15 @@
             this.testPers = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.cablLinePage = new System.Windows.Forms.TabPage();
-            this.TableOfCableLine = new System.Windows.Forms.DataGridView();
+            this.cablLineGrid = new System.Windows.Forms.DataGridView();
+            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.контрольныеКабелиBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableDBDataSet = new ProtocolAutoTest.TableDBDataSet();
+            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
             this.saveBtn = new System.Windows.Forms.Button();
@@ -76,20 +82,34 @@
             this.costumerBox = new System.Windows.Forms.TextBox();
             this.customer = new System.Windows.Forms.Label();
             this.tabControlPanel = new System.Windows.Forms.TabControl();
+            this.enginePage = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.engineGrid2 = new System.Windows.Forms.DataGridView();
+            this.numOfEngine2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddOfEngine2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.resistOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.normValueOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kabcOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label9 = new System.Windows.Forms.Label();
+            this.engineGrid = new System.Windows.Forms.DataGridView();
+            this.numOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.typeOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serialNumOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.powerOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.voltageOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.currentOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.контрольные_кабелиTableAdapter = new ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter();
-            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cablLinePage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TableOfCableLine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cablLineGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableDBDataSet)).BeginInit();
             this.mainTab.SuspendLayout();
             this.tabControlPanel.SuspendLayout();
+            this.enginePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.engineGrid2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.engineGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // label8
@@ -107,7 +127,8 @@
             this.protListBox.CheckOnClick = true;
             this.protListBox.FormattingEnabled = true;
             this.protListBox.Items.AddRange(new object[] {
-            "Испытание кабельных линий"});
+            "Испытание кабельных линий",
+            "Испытания электродвигателей"});
             this.protListBox.Location = new System.Drawing.Point(756, 58);
             this.protListBox.Name = "protListBox";
             this.protListBox.Size = new System.Drawing.Size(243, 94);
@@ -252,7 +273,7 @@
             // 
             // cablLinePage
             // 
-            this.cablLinePage.Controls.Add(this.TableOfCableLine);
+            this.cablLinePage.Controls.Add(this.cablLineGrid);
             this.cablLinePage.Location = new System.Drawing.Point(4, 22);
             this.cablLinePage.Name = "cablLinePage";
             this.cablLinePage.Padding = new System.Windows.Forms.Padding(3);
@@ -261,22 +282,42 @@
             this.cablLinePage.Text = "Кабельные линии";
             this.cablLinePage.UseVisualStyleBackColor = true;
             // 
-            // TableOfCableLine
+            // cablLineGrid
             // 
-            this.TableOfCableLine.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.TableOfCableLine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TableOfCableLine.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cablLineGrid.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.cablLineGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.cablLineGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.cablLineGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NumOfRow,
             this.objAddCell,
             this.MarkOfCableCell,
             this.sechenieCable,
             this.countJil,
             this.lengthCell});
-            this.TableOfCableLine.Location = new System.Drawing.Point(6, 6);
-            this.TableOfCableLine.Name = "TableOfCableLine";
-            this.TableOfCableLine.Size = new System.Drawing.Size(1013, 543);
-            this.TableOfCableLine.TabIndex = 0;
-            this.TableOfCableLine.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.TableOfCableLine_UserAddedRow);
+            this.cablLineGrid.Location = new System.Drawing.Point(6, 6);
+            this.cablLineGrid.Name = "cablLineGrid";
+            this.cablLineGrid.Size = new System.Drawing.Size(1013, 543);
+            this.cablLineGrid.TabIndex = 0;
+            this.cablLineGrid.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.cablLineGrid_UserAddedRow);
+            // 
+            // NumOfRow
+            // 
+            this.NumOfRow.HeaderText = "№";
+            this.NumOfRow.Name = "NumOfRow";
+            this.NumOfRow.ReadOnly = true;
+            // 
+            // objAddCell
+            // 
+            this.objAddCell.HeaderText = "Присоединение";
+            this.objAddCell.Name = "objAddCell";
+            // 
+            // MarkOfCableCell
+            // 
+            this.MarkOfCableCell.AutoComplete = false;
+            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
+            this.MarkOfCableCell.DisplayMember = "Марка";
+            this.MarkOfCableCell.HeaderText = "Марка";
+            this.MarkOfCableCell.Name = "MarkOfCableCell";
             // 
             // контрольныеКабелиBindingSource
             // 
@@ -287,6 +328,21 @@
             // 
             this.tableDBDataSet.DataSetName = "TableDBDataSet";
             this.tableDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // sechenieCable
+            // 
+            this.sechenieCable.HeaderText = "Сечение";
+            this.sechenieCable.Name = "sechenieCable";
+            // 
+            // countJil
+            // 
+            this.countJil.HeaderText = "Кол-во жил";
+            this.countJil.Name = "countJil";
+            // 
+            // lengthCell
+            // 
+            this.lengthCell.HeaderText = "Длина, м";
+            this.lengthCell.Name = "lengthCell";
             // 
             // dateRegBox
             // 
@@ -523,49 +579,147 @@
             // 
             this.tabControlPanel.Controls.Add(this.mainTab);
             this.tabControlPanel.Controls.Add(this.cablLinePage);
+            this.tabControlPanel.Controls.Add(this.enginePage);
             this.tabControlPanel.Location = new System.Drawing.Point(12, 12);
             this.tabControlPanel.Name = "tabControlPanel";
             this.tabControlPanel.SelectedIndex = 0;
             this.tabControlPanel.Size = new System.Drawing.Size(1033, 581);
             this.tabControlPanel.TabIndex = 1;
             // 
+            // enginePage
+            // 
+            this.enginePage.Controls.Add(this.label10);
+            this.enginePage.Controls.Add(this.engineGrid2);
+            this.enginePage.Controls.Add(this.label9);
+            this.enginePage.Controls.Add(this.engineGrid);
+            this.enginePage.Location = new System.Drawing.Point(4, 22);
+            this.enginePage.Name = "enginePage";
+            this.enginePage.Padding = new System.Windows.Forms.Padding(3);
+            this.enginePage.Size = new System.Drawing.Size(1025, 555);
+            this.enginePage.TabIndex = 2;
+            this.enginePage.Text = "Электродвигатели";
+            this.enginePage.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.Location = new System.Drawing.Point(6, 286);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(709, 17);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Измерение сопротивления изоляции обмотки статора электродвигателей (формируется а" +
+    "втоматически)";
+            // 
+            // engineGrid2
+            // 
+            this.engineGrid2.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.engineGrid2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.engineGrid2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.engineGrid2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.numOfEngine2,
+            this.objAddOfEngine2,
+            this.resistOfEngine,
+            this.normValueOfEngine,
+            this.kabcOfEngine});
+            this.engineGrid2.Location = new System.Drawing.Point(6, 320);
+            this.engineGrid2.Name = "engineGrid2";
+            this.engineGrid2.Size = new System.Drawing.Size(1013, 229);
+            this.engineGrid2.TabIndex = 2;
+            // 
+            // numOfEngine2
+            // 
+            this.numOfEngine2.HeaderText = "№";
+            this.numOfEngine2.Name = "numOfEngine2";
+            // 
+            // objAddOfEngine2
+            // 
+            this.objAddOfEngine2.HeaderText = "Присоединение";
+            this.objAddOfEngine2.Name = "objAddOfEngine2";
+            // 
+            // resistOfEngine
+            // 
+            this.resistOfEngine.HeaderText = "Сопр. изоляции, МОм";
+            this.resistOfEngine.Name = "resistOfEngine";
+            // 
+            // normValueOfEngine
+            // 
+            this.normValueOfEngine.HeaderText = "Нормируемое значение, МОм";
+            this.normValueOfEngine.Name = "normValueOfEngine";
+            // 
+            // kabcOfEngine
+            // 
+            this.kabcOfEngine.HeaderText = "Кабс.%";
+            this.kabcOfEngine.Name = "kabcOfEngine";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.Location = new System.Drawing.Point(6, 15);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(132, 17);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Заводские данные";
+            // 
+            // engineGrid
+            // 
+            this.engineGrid.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.engineGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.engineGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.engineGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.numOfEngine,
+            this.objAddEngine,
+            this.typeOfEngine,
+            this.serialNumOfEngine,
+            this.powerOfEngine,
+            this.voltageOfEngine,
+            this.currentOfEngine});
+            this.engineGrid.Location = new System.Drawing.Point(6, 40);
+            this.engineGrid.Name = "engineGrid";
+            this.engineGrid.Size = new System.Drawing.Size(1013, 220);
+            this.engineGrid.TabIndex = 0;
+            this.engineGrid.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.engineGrid_UserAddedRow);
+            // 
+            // numOfEngine
+            // 
+            this.numOfEngine.HeaderText = "№";
+            this.numOfEngine.Name = "numOfEngine";
+            this.numOfEngine.ReadOnly = true;
+            // 
+            // objAddEngine
+            // 
+            this.objAddEngine.HeaderText = "Присоединение";
+            this.objAddEngine.Name = "objAddEngine";
+            // 
+            // typeOfEngine
+            // 
+            this.typeOfEngine.HeaderText = "Тип";
+            this.typeOfEngine.Name = "typeOfEngine";
+            // 
+            // serialNumOfEngine
+            // 
+            this.serialNumOfEngine.HeaderText = "Заводской номер";
+            this.serialNumOfEngine.Name = "serialNumOfEngine";
+            // 
+            // powerOfEngine
+            // 
+            this.powerOfEngine.HeaderText = "Мощность, кВт";
+            this.powerOfEngine.Name = "powerOfEngine";
+            // 
+            // voltageOfEngine
+            // 
+            this.voltageOfEngine.HeaderText = "Номинальное напряжение, В";
+            this.voltageOfEngine.Name = "voltageOfEngine";
+            // 
+            // currentOfEngine
+            // 
+            this.currentOfEngine.HeaderText = "Номинальный ток, А";
+            this.currentOfEngine.Name = "currentOfEngine";
+            // 
             // контрольные_кабелиTableAdapter
             // 
             this.контрольные_кабелиTableAdapter.ClearBeforeFill = true;
-            // 
-            // NumOfRow
-            // 
-            this.NumOfRow.HeaderText = "№";
-            this.NumOfRow.Name = "NumOfRow";
-            this.NumOfRow.ReadOnly = true;
-            // 
-            // objAddCell
-            // 
-            this.objAddCell.HeaderText = "Присоединение";
-            this.objAddCell.Name = "objAddCell";
-            // 
-            // MarkOfCableCell
-            // 
-            this.MarkOfCableCell.AutoComplete = false;
-            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
-            this.MarkOfCableCell.DisplayMember = "Марка";
-            this.MarkOfCableCell.HeaderText = "Марка";
-            this.MarkOfCableCell.Name = "MarkOfCableCell";
-            // 
-            // sechenieCable
-            // 
-            this.sechenieCable.HeaderText = "Сечение";
-            this.sechenieCable.Name = "sechenieCable";
-            // 
-            // countJil
-            // 
-            this.countJil.HeaderText = "Кол-во жил";
-            this.countJil.Name = "countJil";
-            // 
-            // lengthCell
-            // 
-            this.lengthCell.HeaderText = "Длина, м";
-            this.lengthCell.Name = "lengthCell";
             // 
             // mainForm
             // 
@@ -577,12 +731,16 @@
             this.Text = "ProtocolAuto";
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.cablLinePage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TableOfCableLine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cablLineGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableDBDataSet)).EndInit();
             this.mainTab.ResumeLayout(false);
             this.mainTab.PerformLayout();
             this.tabControlPanel.ResumeLayout(false);
+            this.enginePage.ResumeLayout(false);
+            this.enginePage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.engineGrid2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.engineGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -634,7 +792,7 @@
         private System.Windows.Forms.TabControl tabControlPanel;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.DataGridView TableOfCableLine;
+        private System.Windows.Forms.DataGridView cablLineGrid;
         private ProtocolAutoTest.TableDBDataSet tableDBDataSet;
         private System.Windows.Forms.BindingSource контрольныеКабелиBindingSource;
         private ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter контрольные_кабелиTableAdapter;
@@ -644,6 +802,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn sechenieCable;
         private System.Windows.Forms.DataGridViewTextBoxColumn countJil;
         private System.Windows.Forms.DataGridViewTextBoxColumn lengthCell;
+        private System.Windows.Forms.TabPage enginePage;
+        private System.Windows.Forms.DataGridView engineGrid;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView engineGrid2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numOfEngine2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn objAddOfEngine2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn resistOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn normValueOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kabcOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn objAddEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn typeOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialNumOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn powerOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn voltageOfEngine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn currentOfEngine;
     }
 }
 

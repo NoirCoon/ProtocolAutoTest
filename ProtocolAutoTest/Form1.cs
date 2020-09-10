@@ -241,9 +241,10 @@ namespace ProtocolAutoTest
 				Table table1; //Таблица замены обьекта и присоединения
 				Table table3; //Таблица нижнего колонтитула
 				Table lastTable; //Последняя таблица с подписями
-								 //
-								 //Замента номера протокола, температуры, давления и влаги
-								 //
+
+				//
+				//Замента номера протокола, температуры, давления и влаги
+				//
 				worddocument.Select();
 				findText = "п00-0-0-0000";
 				replaceText = protNumBox.Text + "-" + numOfProtocol.ToString() + "-" + DateTime.Now.Year.ToString();
@@ -566,11 +567,11 @@ namespace ProtocolAutoTest
 		private void TabPagesShower(string item )  //Показыватель вкладок. При изменении состояния чек бокса проверяет по названию какой изменили и показывает вкладку
 		{
 			
-			foreach (var txtB in tabPageList)
+			foreach (var tabPage in tabPageList)
 			{
-				if (txtB.Text == item)
+				if (tabPage.Text == item)
 				{
-					txtB.Parent = tabControlPanel;
+					tabPage.Parent = tabControlPanel;
 
 				}
 

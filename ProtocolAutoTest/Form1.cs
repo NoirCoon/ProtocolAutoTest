@@ -71,6 +71,7 @@ namespace ProtocolAutoTest
 		private string SaveName;//наименование протокола для сохранения
 		private string SavePath;//адрес сохранения
 		private string pathToFile;//имя файла для открытия, в текущем варианте только Example.docx и TablExmp.docx
+
 		private int numOfProtocol;
 
 		private Object trueObj = true;// Обертка значения TRUE в объект
@@ -80,10 +81,14 @@ namespace ProtocolAutoTest
 		private bool GeneralFault = false;//важная переменная на случай некой Генеральной ошибки, если TRUE ошибка имеет место быть
 		private bool SavePathSelected; //Проверка что путь сохранения выбран, Если TRUE значит выбран.
 
+        private readonly List<TabPage> tabPageList;
+
 		//
 		//Список шаблонов
 		//
-		private TemplateTables tmpBufferTemplates;//пустой шаблон
+		private TemplateTables tmpBufferTemplates;//пустой шаблон Пустая переменная под шаблон класса Шаблонов?
+
+		//Два экземпляра класса шаблонов с разными значениями массивов. Зачем в нижнем индексы с 5? ты же пустой массив переопределяешь
 		private readonly TemplateTables cbLineTemplate = new TemplateTables
 		{
 			tables = new Table[4],
@@ -118,9 +123,10 @@ namespace ProtocolAutoTest
 			testPersBox3.AutoCompleteCustomSource = srcPersTest;
 			testPersBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			testPersBox3.AutoCompleteSource = AutoCompleteSource.CustomSource;
-			
-			//cablLinePage.Parent = null;
-			//enginePage.Parent = null;
+
+			tabPageList = tabControlPanel.Controls.OfType<TabPage>().ToList(); //При инициализации формы получаем все таб пейджы
+			TabPagesHider(); //И скрываем сразу же
+
 		}
 
 		private void Create_Click(object sender, EventArgs e)//нажатие кнопки Создать
@@ -457,7 +463,7 @@ namespace ProtocolAutoTest
 		//Функция сохранения готового протокола
 		//
 
-		private void Save()//wordapp всё еще открыт
+		private void Save()//wordapp всё еще открыт А он точно null должен быть?
 		{
 			Object fileName = SavePath + @"\" + protNumBox.Text + "-" + numOfProtocol.ToString() + "-" + DateTime.Now.Year.ToString() + " " + SaveName + ".docx";//заменить "ЗАМЕНИТЬ" на порядковый номер протокола (формируется из чекбокса)
 			Object fileFormat = WdSaveFormat.wdFormatDocumentDefault;//формат сохраняемого документа
@@ -541,24 +547,59 @@ namespace ProtocolAutoTest
 		}
 
 		//
-		//Функция для отображения вкладок, если чекбокс изменяется
+		//Функция для отображения вкладок, если чекбокс изменяется. !ВАЖНО при добавлении новых вкладок и чекбоксов нужно чтобы они совпадали по имени!
+		//Можно конечно на индексы перенести но мне лень.
 		//
 		private void ProtListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			/*
-			for (int i = 0; i < protListBox.Items.Count; i++)
+			TabPagesHider(); /*Скрывает все вкладки при измении чекбокса, Решение конечно деревянное но впринципе пойдет пока.
+			                  * Ну типа сначала скрыть все и циклом заного пройтись и открыть нужное*/
+
+			foreach (object itemChecked in protListBox.CheckedItems)
 			{
-				if (protListBox.GetItemChecked(i) == true)
+				TabPagesShower(itemChecked.ToString());
+			}
+
+
+		}
+
+		private void TabPagesShower(string item )  //Показыватель вкладок. При изменении состояния чек бокса проверяет по названию какой изменили и показывает вкладку
+		{
+			
+			foreach (var txtB in tabPageList)
+			{
+				if (txtB.Text == item)
 				{
-					cablLinePage.Parent = tabControlPanel; //Показать
+					txtB.Parent = tabControlPanel;
+
 				}
-				else if (protListBox.GetItemChecked(i) == false)
+
+			}
+
+		}
+
+		private void TabPagesHider() //Скрыватель вкладок. Как нетрудно догадаться скрывает вкладки кроме основной.
+        {
+			foreach (var tabPage in tabPageList)
+			{
+				if (tabPage.Name != "mainTab")
 				{
-					cablLinePage.Parent = null; //Скрыть
+					tabPage.Parent = null;
 				}
 			}
-			*/
+
 		}
+
+
+
+
+
+
+
+
+
+
+
 		//
 		//Функция которая нужна для подключения к бд
 		//
@@ -569,10 +610,10 @@ namespace ProtocolAutoTest
             this.контрольные_кабелиTableAdapter.Fill(this.tableDBDataSet.Контрольные_кабели);
 
         }
+
 		//
 		//Функция нумерация строк при создании новой строки, строки только для чтения, по ним определяется можно ли строку перенисти в таблицу или нет
 		//
-
 		private void cablLineGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)//при создании новой строчки
 		{
 			for (int i = 0; i < cablLineGrid.Rows.Count - 1; i++)//перебирает все строчки

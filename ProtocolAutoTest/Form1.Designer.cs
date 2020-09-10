@@ -51,8 +51,14 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.cablLinePage = new System.Windows.Forms.TabPage();
             this.cablLineGrid = new System.Windows.Forms.DataGridView();
+            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.контрольныеКабелиBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableDBDataSet = new ProtocolAutoTest.TableDBDataSet();
+            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
             this.saveBtn = new System.Windows.Forms.Button();
@@ -95,12 +101,6 @@
             this.currentOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.контрольные_кабелиTableAdapter = new ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter();
-            this.NumOfRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.objAddCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkOfCableCell = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.countJil = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sechenieCable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cablLinePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cablLineGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).BeginInit();
@@ -273,13 +273,14 @@
             // 
             // cablLinePage
             // 
+            this.cablLinePage.AccessibleName = "Кабельные линии";
             this.cablLinePage.Controls.Add(this.cablLineGrid);
             this.cablLinePage.Location = new System.Drawing.Point(4, 22);
             this.cablLinePage.Name = "cablLinePage";
             this.cablLinePage.Padding = new System.Windows.Forms.Padding(3);
             this.cablLinePage.Size = new System.Drawing.Size(1025, 555);
             this.cablLinePage.TabIndex = 1;
-            this.cablLinePage.Text = "Кабельные линии";
+            this.cablLinePage.Text = "Испытание кабельных линий";
             this.cablLinePage.UseVisualStyleBackColor = true;
             // 
             // cablLineGrid
@@ -300,6 +301,25 @@
             this.cablLineGrid.TabIndex = 0;
             this.cablLineGrid.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.cablLineGrid_UserAddedRow);
             // 
+            // NumOfRow
+            // 
+            this.NumOfRow.HeaderText = "№";
+            this.NumOfRow.Name = "NumOfRow";
+            this.NumOfRow.ReadOnly = true;
+            // 
+            // objAddCell
+            // 
+            this.objAddCell.HeaderText = "Присоединение";
+            this.objAddCell.Name = "objAddCell";
+            // 
+            // MarkOfCableCell
+            // 
+            this.MarkOfCableCell.AutoComplete = false;
+            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
+            this.MarkOfCableCell.DisplayMember = "Марка";
+            this.MarkOfCableCell.HeaderText = "Марка";
+            this.MarkOfCableCell.Name = "MarkOfCableCell";
+            // 
             // контрольныеКабелиBindingSource
             // 
             this.контрольныеКабелиBindingSource.DataMember = "Контрольные кабели";
@@ -309,6 +329,21 @@
             // 
             this.tableDBDataSet.DataSetName = "TableDBDataSet";
             this.tableDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // countJil
+            // 
+            this.countJil.HeaderText = "Кол-во жил";
+            this.countJil.Name = "countJil";
+            // 
+            // sechenieCable
+            // 
+            this.sechenieCable.HeaderText = "Сечение";
+            this.sechenieCable.Name = "sechenieCable";
+            // 
+            // lengthCell
+            // 
+            this.lengthCell.HeaderText = "Длина, м";
+            this.lengthCell.Name = "lengthCell";
             // 
             // dateRegBox
             // 
@@ -563,7 +598,7 @@
             this.enginePage.Padding = new System.Windows.Forms.Padding(3);
             this.enginePage.Size = new System.Drawing.Size(1025, 555);
             this.enginePage.TabIndex = 2;
-            this.enginePage.Text = "Электродвигатели";
+            this.enginePage.Text = "Испытания электродвигателей";
             this.enginePage.UseVisualStyleBackColor = true;
             // 
             // label10
@@ -686,40 +721,6 @@
             // контрольные_кабелиTableAdapter
             // 
             this.контрольные_кабелиTableAdapter.ClearBeforeFill = true;
-            // 
-            // NumOfRow
-            // 
-            this.NumOfRow.HeaderText = "№";
-            this.NumOfRow.Name = "NumOfRow";
-            this.NumOfRow.ReadOnly = true;
-            // 
-            // objAddCell
-            // 
-            this.objAddCell.HeaderText = "Присоединение";
-            this.objAddCell.Name = "objAddCell";
-            // 
-            // MarkOfCableCell
-            // 
-            this.MarkOfCableCell.AutoComplete = false;
-            this.MarkOfCableCell.DataSource = this.контрольныеКабелиBindingSource;
-            this.MarkOfCableCell.DisplayMember = "Марка";
-            this.MarkOfCableCell.HeaderText = "Марка";
-            this.MarkOfCableCell.Name = "MarkOfCableCell";
-            // 
-            // countJil
-            // 
-            this.countJil.HeaderText = "Кол-во жил";
-            this.countJil.Name = "countJil";
-            // 
-            // sechenieCable
-            // 
-            this.sechenieCable.HeaderText = "Сечение";
-            this.sechenieCable.Name = "sechenieCable";
-            // 
-            // lengthCell
-            // 
-            this.lengthCell.HeaderText = "Длина, м";
-            this.lengthCell.Name = "lengthCell";
             // 
             // mainForm
             // 

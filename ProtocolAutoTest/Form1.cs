@@ -147,12 +147,12 @@ namespace ProtocolAutoTest
 
 					numOfProtocol++;
 				}
-				create.Enabled = true;
 			}
 			else //Иначе сообщение об ошибке
 			{ 
 				GenFault(20); 
 			} 
+			create.Enabled = true;
 		}
 		//
 		//Функция определяющая заполненность полей (На данном этапе проверяет только главную вкладку)
@@ -370,7 +370,7 @@ namespace ProtocolAutoTest
 				findText = "@body"; //Поиск @body
 				replaceText = "";
 				wordapp.Selection.Find.Execute(ref findText, ReplaceWith: ref replaceText); //Поиск @body и его замена
-				Save();
+				//Save();
 			}
 			catch (Exception)
 			{
@@ -432,7 +432,7 @@ namespace ProtocolAutoTest
                         {
 							if (engineGrid.Rows[i].Cells[1].Value != null)//уже было в кабллайн
 							{
-								for (int j = 0; j < 3; j++)//уже было в кабллайн
+								for (int j = 0; j < engineGrid.Rows.Count; j++)//уже было в кабллайн
 								{
 									tables[1].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());//переносит все данные в первую таблицу
 									tables[3].Cell(i + 1, j + 1).Range.InsertAfter(engineGrid.Rows[i].Cells[j].Value.ToString());

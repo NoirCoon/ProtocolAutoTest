@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace ProtocolAutoTest
 {
+    
+
     public class TemplateTables
     {
         
 		public Table[] tables = new Table[10];//массив таблиц макс 10
         public int[] index;//массив для индексов используемых таблиц
         public int GetCountTable()//получение количества таблицы
+
 
         {
             int count = 0;

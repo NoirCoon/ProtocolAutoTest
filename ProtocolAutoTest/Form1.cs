@@ -560,8 +560,6 @@ namespace ProtocolAutoTest
 			{
 				TabPagesShower(itemChecked.ToString());
 			}
-
-
 		}
 
 		private void TabPagesShower(string item )  //Показыватель вкладок. При изменении состояния чек бокса проверяет по названию какой изменили и показывает вкладку
@@ -572,9 +570,7 @@ namespace ProtocolAutoTest
 				if (tabPage.Text == item)
 				{
 					tabPage.Parent = tabControlPanel;
-
 				}
-
 			}
 
 		}
@@ -588,17 +584,7 @@ namespace ProtocolAutoTest
 					tabPage.Parent = null;
 				}
 			}
-
 		}
-
-
-
-
-
-
-
-
-
 
 
 		//

@@ -397,7 +397,7 @@
             this.mainTab.Location = new System.Drawing.Point(4, 22);
             this.mainTab.Name = "mainTab";
             this.mainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTab.Size = new System.Drawing.Size(1076, 535);
+            this.mainTab.Size = new System.Drawing.Size(1072, 531);
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Основные данные";
             this.mainTab.UseVisualStyleBackColor = true;
@@ -586,7 +586,7 @@
             this.tabControlPanel.Margin = new System.Windows.Forms.Padding(10);
             this.tabControlPanel.Name = "tabControlPanel";
             this.tabControlPanel.SelectedIndex = 0;
-            this.tabControlPanel.Size = new System.Drawing.Size(1084, 561);
+            this.tabControlPanel.Size = new System.Drawing.Size(1080, 557);
             this.tabControlPanel.TabIndex = 1;
             // 
             // enginePage
@@ -728,10 +728,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1084, 561);
+            this.ClientSize = new System.Drawing.Size(1080, 557);
             this.Controls.Add(this.tabControlPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "mainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ProtocolAuto";
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.cablLinePage.ResumeLayout(false);

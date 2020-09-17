@@ -16,6 +16,7 @@ namespace ProtocolAutoTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new TitleForm());
             Application.Run(new mainForm());
         }
     }

@@ -60,6 +60,12 @@
       <DependentUpon>TableDBDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="TemplateTables.cs" />
+    <Compile Include="TitleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TitleForm.Designer.cs">
+      <DependentUpon>TitleForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -72,6 +78,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TitleForm.resx">
+      <DependentUpon>TitleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

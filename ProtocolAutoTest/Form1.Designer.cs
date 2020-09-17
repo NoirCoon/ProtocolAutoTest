@@ -116,7 +116,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(815, 29);
+            this.label8.Location = new System.Drawing.Point(838, 29);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(124, 17);
             this.label8.TabIndex = 41;
@@ -129,7 +129,7 @@
             this.protListBox.Items.AddRange(new object[] {
             "Испытание кабельных линий",
             "Испытания электродвигателей"});
-            this.protListBox.Location = new System.Drawing.Point(756, 58);
+            this.protListBox.Location = new System.Drawing.Point(779, 58);
             this.protListBox.Name = "protListBox";
             this.protListBox.Size = new System.Drawing.Size(243, 94);
             this.protListBox.TabIndex = 19;
@@ -190,7 +190,7 @@
             // 
             // create
             // 
-            this.create.Location = new System.Drawing.Point(868, 495);
+            this.create.Location = new System.Drawing.Point(900, 424);
             this.create.Name = "create";
             this.create.Size = new System.Drawing.Size(122, 35);
             this.create.TabIndex = 20;
@@ -397,14 +397,14 @@
             this.mainTab.Location = new System.Drawing.Point(4, 22);
             this.mainTab.Name = "mainTab";
             this.mainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTab.Size = new System.Drawing.Size(1025, 555);
+            this.mainTab.Size = new System.Drawing.Size(1076, 535);
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Основные данные";
             this.mainTab.UseVisualStyleBackColor = true;
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(868, 442);
+            this.saveBtn.Location = new System.Drawing.Point(900, 371);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(122, 32);
             this.saveBtn.TabIndex = 20;
@@ -581,10 +581,12 @@
             this.tabControlPanel.Controls.Add(this.mainTab);
             this.tabControlPanel.Controls.Add(this.cablLinePage);
             this.tabControlPanel.Controls.Add(this.enginePage);
-            this.tabControlPanel.Location = new System.Drawing.Point(12, 12);
+            this.tabControlPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel.Location = new System.Drawing.Point(0, 0);
+            this.tabControlPanel.Margin = new System.Windows.Forms.Padding(10);
             this.tabControlPanel.Name = "tabControlPanel";
             this.tabControlPanel.SelectedIndex = 0;
-            this.tabControlPanel.Size = new System.Drawing.Size(1033, 581);
+            this.tabControlPanel.Size = new System.Drawing.Size(1084, 561);
             this.tabControlPanel.TabIndex = 1;
             // 
             // enginePage
@@ -726,8 +728,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1053, 598);
+            this.ClientSize = new System.Drawing.Size(1084, 561);
             this.Controls.Add(this.tabControlPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "mainForm";
             this.Text = "ProtocolAuto";
             this.Load += new System.EventHandler(this.mainForm_Load);

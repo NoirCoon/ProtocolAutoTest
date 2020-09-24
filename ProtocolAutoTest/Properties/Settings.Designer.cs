@@ -33,5 +33,17 @@ namespace ProtocolAutoTest.Properties {
                 return ((string)(this["TableDBConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Animation {
+            get {
+                return ((bool)(this["Animation"]));
+            }
+            set {
+                this["Animation"] = value;
+            }
+        }
     }
 }

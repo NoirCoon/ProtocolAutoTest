@@ -61,6 +61,7 @@
             this.lengthCell = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateRegBox = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabPage();
+            this.genEmptyTemplate = new System.Windows.Forms.Button();
             this.saveBtn = new System.Windows.Forms.Button();
             this.dateReg = new System.Windows.Forms.Label();
             this.dateTestBox = new System.Windows.Forms.TextBox();
@@ -99,8 +100,15 @@
             this.powerOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.voltageOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.currentOfEngine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.powerCabPage = new System.Windows.Forms.TabPage();
+            this.groundPage = new System.Windows.Forms.TabPage();
+            this.vtorComPage = new System.Windows.Forms.TabPage();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.контрольные_кабелиTableAdapter = new ProtocolAutoTest.TableDBDataSetTableAdapters.Контрольные_кабелиTableAdapter();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cablLinePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cablLineGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.контрольныеКабелиBindingSource)).BeginInit();
@@ -110,6 +118,7 @@
             this.enginePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineGrid2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.engineGrid)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label8
@@ -127,8 +136,11 @@
             this.protListBox.CheckOnClick = true;
             this.protListBox.FormattingEnabled = true;
             this.protListBox.Items.AddRange(new object[] {
-            "Испытание кабельных линий",
-            "Испытания электродвигателей"});
+            "Испытания кабельных линий",
+            "Испытания электродвигателей",
+            "Испытания силовых кабельных линий",
+            "Испытания заземления",
+            "Испытания вторичной коммутации"});
             this.protListBox.Location = new System.Drawing.Point(779, 58);
             this.protListBox.Name = "protListBox";
             this.protListBox.Size = new System.Drawing.Size(243, 94);
@@ -278,9 +290,9 @@
             this.cablLinePage.Location = new System.Drawing.Point(4, 22);
             this.cablLinePage.Name = "cablLinePage";
             this.cablLinePage.Padding = new System.Windows.Forms.Padding(3);
-            this.cablLinePage.Size = new System.Drawing.Size(1025, 555);
+            this.cablLinePage.Size = new System.Drawing.Size(1072, 507);
             this.cablLinePage.TabIndex = 1;
-            this.cablLinePage.Text = "Испытание кабельных линий";
+            this.cablLinePage.Text = "Испытания кабельных линий";
             this.cablLinePage.UseVisualStyleBackColor = true;
             // 
             // cablLineGrid
@@ -354,6 +366,7 @@
             // 
             // mainTab
             // 
+            this.mainTab.Controls.Add(this.genEmptyTemplate);
             this.mainTab.Controls.Add(this.saveBtn);
             this.mainTab.Controls.Add(this.label8);
             this.mainTab.Controls.Add(this.protListBox);
@@ -397,10 +410,20 @@
             this.mainTab.Location = new System.Drawing.Point(4, 22);
             this.mainTab.Name = "mainTab";
             this.mainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTab.Size = new System.Drawing.Size(1072, 531);
+            this.mainTab.Size = new System.Drawing.Size(1072, 507);
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Основные данные";
             this.mainTab.UseVisualStyleBackColor = true;
+            // 
+            // genEmptyTemplate
+            // 
+            this.genEmptyTemplate.Location = new System.Drawing.Point(779, 180);
+            this.genEmptyTemplate.Name = "genEmptyTemplate";
+            this.genEmptyTemplate.Size = new System.Drawing.Size(243, 34);
+            this.genEmptyTemplate.TabIndex = 42;
+            this.genEmptyTemplate.Text = "Генерация пустого документа с основным форматированием";
+            this.genEmptyTemplate.UseVisualStyleBackColor = true;
+            this.genEmptyTemplate.Click += new System.EventHandler(this.genEmptyTemplate_Click);
             // 
             // saveBtn
             // 
@@ -581,12 +604,15 @@
             this.tabControlPanel.Controls.Add(this.mainTab);
             this.tabControlPanel.Controls.Add(this.cablLinePage);
             this.tabControlPanel.Controls.Add(this.enginePage);
+            this.tabControlPanel.Controls.Add(this.powerCabPage);
+            this.tabControlPanel.Controls.Add(this.groundPage);
+            this.tabControlPanel.Controls.Add(this.vtorComPage);
             this.tabControlPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel.Location = new System.Drawing.Point(0, 0);
+            this.tabControlPanel.Location = new System.Drawing.Point(0, 24);
             this.tabControlPanel.Margin = new System.Windows.Forms.Padding(10);
             this.tabControlPanel.Name = "tabControlPanel";
             this.tabControlPanel.SelectedIndex = 0;
-            this.tabControlPanel.Size = new System.Drawing.Size(1080, 557);
+            this.tabControlPanel.Size = new System.Drawing.Size(1080, 533);
             this.tabControlPanel.TabIndex = 1;
             // 
             // enginePage
@@ -598,7 +624,7 @@
             this.enginePage.Location = new System.Drawing.Point(4, 22);
             this.enginePage.Name = "enginePage";
             this.enginePage.Padding = new System.Windows.Forms.Padding(3);
-            this.enginePage.Size = new System.Drawing.Size(1025, 555);
+            this.enginePage.Size = new System.Drawing.Size(1072, 507);
             this.enginePage.TabIndex = 2;
             this.enginePage.Text = "Испытания электродвигателей";
             this.enginePage.UseVisualStyleBackColor = true;
@@ -720,9 +746,71 @@
             this.currentOfEngine.HeaderText = "Номинальный ток, А";
             this.currentOfEngine.Name = "currentOfEngine";
             // 
+            // powerCabPage
+            // 
+            this.powerCabPage.Location = new System.Drawing.Point(4, 22);
+            this.powerCabPage.Name = "powerCabPage";
+            this.powerCabPage.Size = new System.Drawing.Size(1072, 507);
+            this.powerCabPage.TabIndex = 3;
+            this.powerCabPage.Text = "Испытания силовых кабельных линий";
+            this.powerCabPage.UseVisualStyleBackColor = true;
+            // 
+            // groundPage
+            // 
+            this.groundPage.Location = new System.Drawing.Point(4, 22);
+            this.groundPage.Name = "groundPage";
+            this.groundPage.Size = new System.Drawing.Size(1072, 507);
+            this.groundPage.TabIndex = 4;
+            this.groundPage.Text = "Испытания заземления";
+            this.groundPage.UseVisualStyleBackColor = true;
+            // 
+            // vtorComPage
+            // 
+            this.vtorComPage.Location = new System.Drawing.Point(4, 22);
+            this.vtorComPage.Name = "vtorComPage";
+            this.vtorComPage.Padding = new System.Windows.Forms.Padding(3);
+            this.vtorComPage.Size = new System.Drawing.Size(1072, 507);
+            this.vtorComPage.TabIndex = 5;
+            this.vtorComPage.Text = "Испытания вторичной коммутации";
+            this.vtorComPage.UseVisualStyleBackColor = true;
+            // 
             // контрольные_кабелиTableAdapter
             // 
             this.контрольные_кабелиTableAdapter.ClearBeforeFill = true;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.настройкиToolStripMenuItem,
+            this.оПрограммеToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1080, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // настройкиToolStripMenuItem
+            // 
+            this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AnimationToolStripMenuItem});
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+            // 
+            // AnimationToolStripMenuItem
+            // 
+            this.AnimationToolStripMenuItem.CheckOnClick = true;
+            this.AnimationToolStripMenuItem.Name = "AnimationToolStripMenuItem";
+            this.AnimationToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.AnimationToolStripMenuItem.Text = "Анимация";
+            this.AnimationToolStripMenuItem.CheckedChanged += new System.EventHandler(this.AnimationToolStripMenuItem_CheckedChanged);
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
             // mainForm
             // 
@@ -730,10 +818,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1080, 557);
             this.Controls.Add(this.tabControlPanel);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "mainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ProtocolAuto";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.cablLinePage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cablLineGrid)).EndInit();
@@ -746,7 +836,10 @@
             this.enginePage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.engineGrid2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.engineGrid)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -824,6 +917,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn countJil;
         private System.Windows.Forms.DataGridViewTextBoxColumn sechenieCable;
         private System.Windows.Forms.DataGridViewTextBoxColumn lengthCell;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem AnimationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.TabPage powerCabPage;
+        private System.Windows.Forms.TabPage groundPage;
+        private System.Windows.Forms.TabPage vtorComPage;
+        private System.Windows.Forms.Button genEmptyTemplate;
     }
 }
 

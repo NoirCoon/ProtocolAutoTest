@@ -51,18 +51,14 @@ cablLine - вкладка кабельные линии
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace ProtocolAutoTest
 {
-	public partial class mainForm : Form
+    public partial class mainForm : Form
 	{
 		private Word.Application wordapp; //глобальное определение Word.Application
 		private Document worddocument;// для основного документа с шапкой и футажом
@@ -127,6 +123,7 @@ namespace ProtocolAutoTest
 			tabPageList = tabControlPanel.Controls.OfType<TabPage>().ToList(); //При инициализации формы получаем все таб пейджы
 			TabPagesHider(); //И скрываем сразу же
 
+
 		}
 
 		private void Create_Click(object sender, EventArgs e)//нажатие кнопки Создать
@@ -141,9 +138,10 @@ namespace ProtocolAutoTest
                 {
 					if(protListBox.GetItemChecked(i) == true)
                     {
-						CreateTemplate();
-						ChangeTemplate(i+1);
-                    }
+						CreateTemplate(); //Функция открытия документа - шаблона
+						ChangeTemplate(); //Генерация основного формата (разделил просто для удобства, основной формат все равно не меняется)
+						ChangeBody(i + 1); //Функция форматирования @body
+					}
 
 					numOfProtocol++;
 				}
@@ -154,16 +152,17 @@ namespace ProtocolAutoTest
 			} 
 			create.Enabled = true;
 		}
+
 		//
 		//Функция определяющая заполненность полей (На данном этапе проверяет только главную вкладку)
 		//
 
-		private bool EmptyTest()
+		private bool EmptyTest() //Какой не гибкий код пиздец
 		{
 			var listTextBox = mainTab.Controls.OfType<TextBox>().ToList();
 			bool empty = true;
-			bool emptyBox = false;
-			foreach (var txtB in listTextBox)
+			bool emptyBox = true; //Здесь тру поставил чтоб не проверялся лист бокс
+            foreach (var txtB in listTextBox)
 			{
 				if (txtB.Text.Length == 0)
 				{
@@ -175,7 +174,8 @@ namespace ProtocolAutoTest
 					txtB.BackColor = Color.White;
 				}
 			}
-			for (int i = 0; i < protListBox.Items.Count; i++)
+
+			/*for (int i = 0; i < protListBox.Items.Count; i++)
 			{
 				if (protListBox.GetItemChecked(i) == true)
 				{
@@ -189,12 +189,12 @@ namespace ProtocolAutoTest
 			else
 			{
 				protListBox.BackColor = Color.White;
-			}
-			return empty&&emptyBox;
+			}*/
+			return empty &&emptyBox;
 		}
 
 		//
-		//Функция открытия документа - шаблона
+		//Функция открытия документа - шаблона Зачем все это переоткрывание? Одного раза же достаточно
 		//
 		private void CreateTemplate()
 		{
@@ -231,7 +231,7 @@ namespace ProtocolAutoTest
 		//Функция внесения данных в шаблон
 		//
 
-		private void ChangeTemplate(int method)
+		private void ChangeTemplate()
 		{
 			try//Генерация основного формата
 			{
@@ -297,7 +297,7 @@ namespace ProtocolAutoTest
 				lastTable.Cell(4, 3).Range.InsertAfter(fioBox4.Text);
 				lastTable.Cell(5, 2).Range.InsertAfter(dateRegBox.Text);
 				lastTable.Cell(6, 2).Range.InsertAfter(dateTestBox.Text);
-				ChangeBody(method);
+
 			}
 			catch (Exception)
 			{
@@ -427,8 +427,8 @@ namespace ProtocolAutoTest
 					//
 					// Придумать как оптимизировать
 					//
-					case 2:
-						for(int i = 0; i < engineGrid.Rows.Count; i++)//Ну тут понятно
+					case 2://случай для шаблона электродвигатели таблица
+						for (int i = 0; i < engineGrid.Rows.Count; i++)//Ну тут понятно
                         {
 							if (engineGrid.Rows[i].Cells[1].Value != null)//уже было в кабллайн
 							{
@@ -474,6 +474,7 @@ namespace ProtocolAutoTest
 			worddocument = null;//очистка переменной
 			worddocument2.Close(ref falseObj, ref missingObj, ref missingObj);//закрытие документа2
 			worddocument2 = null;//очистка переменной2
+			wordapp.Quit(falseObj, missingObj, missingObj); //закрыть ворд епт
 			wordapp = null;
 		}
 
@@ -588,16 +589,26 @@ namespace ProtocolAutoTest
 
 
 		//
-		//Функция которая нужна для подключения к бд
+		//Функция которая отрабатывает при загрузке формы
 		//
 
         private void mainForm_Load(object sender, EventArgs e)
         {
+			AnimationToolStripMenuItem.Checked = Properties.Settings.Default.Animation; // при загрузке формы установить текущую настройку анимации
+
             // TODO: данная строка кода позволяет загрузить данные в таблицу "tableDBDataSet.Контрольные_кабели". При необходимости она может быть перемещена или удалена.
             this.контрольные_кабелиTableAdapter.Fill(this.tableDBDataSet.Контрольные_кабели);
 
         }
 
+		//
+		//Функция которая отрабатывает при закрытии формы
+		//
+
+		private void mainForm_FormClosing(object sender, FormClosingEventArgs e) //при закрытии формы
+        {
+			Properties.Settings.Default.Save();//сохранение настроек
+        }
 		//
 		//Функция нумерация строк при создании новой строки, строки только для чтения, по ним определяется можно ли строку перенисти в таблицу или нет
 		//
@@ -615,6 +626,34 @@ namespace ProtocolAutoTest
 			{
 				engineGrid.Rows[i].Cells[0].Value = i + 1;
 			}
+		}
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			//TODO: Сделать инфо о сборке
+        }
+
+        private void AnimationToolStripMenuItem_CheckedChanged(object sender, EventArgs e) //изменил настройку для анимации
+        {
+			Properties.Settings.Default.Animation = AnimationToolStripMenuItem.Checked;
+		}
+
+        private void genEmptyTemplate_Click(object sender, EventArgs e)
+        {
+			if (EmptyTest() == true && SavePathSelected == true)//проверка на заполненость полей и выбор пути сохранения
+			{
+				numOfProtocol = 1;
+				wordapp = new Word.Application { Visible = true };
+				CreateTemplate(); //Функция открытия документа - шаблона
+				ChangeTemplate(); //Генерация основного формата (разделил просто для удобства, основной формат все равно не меняется)
+				Save();
+
+			}
+			else //Иначе сообщение об ошибке
+			{
+				GenFault(20);
+			}
+
 		}
     }
 }
